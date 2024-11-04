@@ -46,18 +46,22 @@
     <script>
       const loginForm = async (e) => {
         e.preventDefault();
-
+    
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
-
+    
         try {
           const res = await login({ username, password });
-
+    
           if (res.ok) {
+            const data = await res.json(); // Parse the response JSON
             alert("Login successful!");
+    
+            // Store user ID in local storage
+            localStorage.setItem("userId", data.userId);
+            
             window.location.href = "dashboard.html"; // Redirect after successful login
           } else {
-            // Parse JSON error message if available
             const errorData = await res.json();
             alert(errorData.message || "Invalid username or password.");
           }
@@ -66,7 +70,7 @@
           alert("An unexpected error occurred. Please try again.");
         }
       };
-
+    
       const login = async (data) => {
         try {
           const response = await fetch("http://localhost:4000/user/login", {
@@ -81,5 +85,6 @@
         }
       };
     </script>
+    
   </body>
 </html>

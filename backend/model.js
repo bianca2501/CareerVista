@@ -19,6 +19,11 @@ const UserSchema = new Schema({
     unique: true,
     required: true,
   },
+  test_result:{
+    type: String,
+    unique: false,
+    required: false,
+  }
 });
 
 export const UserModel = model("user", UserSchema);
