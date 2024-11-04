@@ -236,64 +236,76 @@
             }
         }
 
-        function displayQuestions() {
-            shuffle(questions);
-            const questionContainer = document.getElementById('question-container');
-            questions.forEach((questionData, index) => {
-                let questionHTML = `<div class="question-block"><h2>Question ${index + 1}</h2>`;
-                questionHTML += `<p>${questionData.question}</p>`;
-                questionData.options.forEach((option) => {
-                    questionHTML += `<label><input type="radio" name="question${index}" value="${option}"> ${option}</label><br>`;
-                });
-                questionHTML += `</div>`;
-                questionContainer.innerHTML += questionHTML;
-            });
-        }
+        // Shuffle questions for randomness
+        shuffle(questions);
 
-        document.addEventListener('DOMContentLoaded', () => {
-            displayQuestions();
+        // Display questions
+        const questionContainer = document.getElementById('question-container');
+        questions.forEach((q, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.innerHTML = `<h4>Q${index + 1}: ${q.question}</h4>`;
+            q.options.forEach(option => {
+                questionDiv.innerHTML += `
+                    <label>
+                        <input type="radio" name="question${index}" value="${option}" required>
+                        ${option}
+                    </label><br>
+                `;
+            });
+            questionContainer.appendChild(questionDiv);
         });
 
-        document.getElementById('aptitude-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const formData = new FormData(this);
+        // Form submission
+        document.getElementById('aptitude-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
             const userAnswers = [];
-            for (let [key, value] of formData.entries()) {
-                userAnswers.push(value);
-            }
 
+            questions.forEach((q, index) => {
+                userAnswers.push(formData.get(`question${index}`));
+            });
+
+            // Initialize scores
             const results = {
                 Science: 0,
                 Commerce: 0,
                 Arts: 0
             };
 
-            questions.forEach((q, index) => {
-                if (userAnswers[index] === q.answer) {
-                    if (q.category === "Numerical Reasoning" || q.category === "Mechanical Reasoning" || q.category === "Science") {
+            // Evaluate answers
+            userAnswers.forEach((answer, index) => {
+                if (answer === questions[index].answer) {
+                    // Update the score based on the question's category
+                    if (questions[index].category === "Numerical Reasoning" || 
+                        questions[index].category === "Science" || 
+                        questions[index].category === "Mechanical Reasoning") {
                         results.Science++;
-                    } else if (q.category === "Logical Reasoning" || q.category === "Verbal Reasoning") {
+                    } else if (questions[index].category === "Logical Reasoning" || 
+                               questions[index].category === "Verbal Reasoning" || 
+                               questions[index].category === "Mathematics") {
                         results.Commerce++;
-                    } else if (q.category === "Arts" || q.category === "Abstract Reasoning") {
+                    } else if (questions[index].category === "Arts" || 
+                               questions[index].category === "Abstract Reasoning") {
                         results.Arts++;
                     }
                 }
             });
 
-            let bestStream = "Arts";
+            // Determine the best stream
+            let bestStream = "Arts"; // Default
             let maxScore = results.Arts;
 
-            for (const [stream, score] of Object.entries(results)) {
-                if (score > maxScore) {
+            for (const stream in results) {
+                if (results[stream] > maxScore) {
                     bestStream = stream;
-                    maxScore = score;
+                    maxScore = results[stream];
                 }
             }
 
+            // Display the result
             const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `Based on your answers, you are best suited for the <strong>${bestStream}</strong> stream. For more accurate results, please visit a counselor of your preference.`;
-            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `Based on your answers, you are best suited for the <strong>${bestStream}</strong> stream!`;
+            resultDiv.style.display = "block";
         });
     </script>
 </body>
