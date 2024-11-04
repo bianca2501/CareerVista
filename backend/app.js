@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Middleware: To console log incoming requests
+// Middleware: To log incoming requests
 app.use((req, res, next) => {
   console.log(req.method, req.path);
   next();
@@ -21,6 +21,7 @@ app.use((req, res, next) => {
 const MONGO_URI = process.env.MONGO_URI;
 const port = process.env.PORT || 4000;
 
+// Root route
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Hello World" });
 });
@@ -113,19 +114,21 @@ app.post("/user/save-result", async (req, res) => {
   }
 });
 
+// Endpoint to check if a user has submitted a test result
 app.get('/user/test-submission/:userId', async (req, res) => {
   const userId = req.params.userId;
 
-  const user = await UserModel.findById(userId);
-  if (!user) {
+  try {
+    const user = await UserModel.findById(userId);
+    if (!user) {
       return res.status(404).json({ message: "User not found" });
-  }
+    }
 
-  const userTestRecord = user.test_result;
-  if (userTestRecord) {
-      return res.json({ hasSubmitted: true });
-  } else {
-      return res.json({ hasSubmitted: false });
+    const userTestRecord = user.test_result;
+    res.json({ hasSubmitted: !!userTestRecord });
+  } catch (error) {
+    console.error("Error checking test submission:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
@@ -197,8 +200,7 @@ app.post("/counselor/login", async (req, res) => {
   }
 });
 
-
-// Route to get total number of counselors and students
+// Route to get total number of counselors, students, videos, and feedback
 app.get('/api/stats', async (req, res) => {
   try {
     const counselorCount = await CounselorModel.countDocuments();
@@ -264,4 +266,17 @@ app.get("/api/feedback", async (req, res) => {
 
 // Connect to MongoDB and start the server
 mongoose
- 
+  .connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to MongoDB");
+    app.listen(port, () => {
+      console.log(`Server running on http://localhost:${port}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+  });
+
