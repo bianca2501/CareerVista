@@ -197,6 +197,7 @@ app.post("/counselor/login", async (req, res) => {
   }
 });
 
+
 // Route to get total number of counselors and students
 app.get('/api/stats', async (req, res) => {
   try {
