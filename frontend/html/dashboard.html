@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
++<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -251,11 +252,11 @@
       <div class="sidebar">
         <h2>Dashboard</h2>
         <ul>
-          <li>
+          <!-- <li>
             <a href="#" onclick="showContent('profile')"
               ><i class="bx bx-user"></i> Profile</a
             >
-          </li>
+          </li> -->
           <li>
             <a href="#" onclick="showContent('aptitude-tests')"
               ><i class="bx bx-file"></i> Aptitude Tests</a
@@ -290,10 +291,10 @@
         </div>
 
         <!-- Sections for the content -->
-        <div class="section" id="profile">
+        <!-- <div class="section" id="profile">
           <h3>Profile</h3>
           <p>Details of the user</p>
-        </div>
+        </div> -->
 
         <div class="section" id="sessions">
           <h3>Counseling Sessions</h3>
@@ -511,7 +512,7 @@
 
       function showContent(sectionId) {
         // Hide the image gallery
-        document.getElementById("image-gallery").style.display = "none";
+        document.getElementById("image-gallery").style.display = "block";
 
         // Hide all sections
         var sections = document.querySelectorAll(".section");

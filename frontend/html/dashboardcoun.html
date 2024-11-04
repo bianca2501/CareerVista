@@ -60,6 +60,23 @@
         padding: 40px;
       }
 
+      .image-gallery {
+        width: 100%;
+        height: 800px; /* Set a fixed height for the slideshow */
+        overflow: hidden; /* Prevent overflow of the image */
+        position: relative; /* Positioning context for absolute elements */
+      }
+
+      #slideshow-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover; /* Scale the image to cover the container */
+        transition: opacity 0.5s ease; /* Add a transition effect */
+        position: absolute; /* Position the image absolutely */
+        top: 0; /* Align to the top */
+        left: 0; /* Align to the left */
+      }
+
       .section {
         margin-bottom: 40px;
       }
@@ -171,11 +188,11 @@
       <div class="sidebar">
         <h2>Counselor Dashboard</h2>
         <ul>
-          <li>
+          <!-- <li>
             <a href="#" onclick="showContent('profile')"
               ><i class="bx bx-user"></i> My Profile</a
             >
-          </li>
+          </li> -->
           <li>
             <a href="#" onclick="showContent('sessions')"
               ><i class="bx bx-history"></i> Manage Sessions</a
@@ -196,22 +213,19 @@
 
       <div class="main-content">
         <!-- Default Image Gallery -->
-        <div id="image-gallery" class="image-gallery">
-          <img
-            id="slideshow-image"
-            src="../images/1.jpg"
-            alt="Slideshow Image"
-          />
-        </div>
+      <div id="image-gallery" class="image-gallery">
+        <img id="slideshow-image" src="../images/1.jpg" alt="Slideshow Image" />
+      </div>
+
 
         <!-- Sections for the content -->
-        <div class="section" id="profile">
+        <!-- <div class="section" id="profile">
           <h3>My Profile</h3>
           <p>
             Details about the counselor's profile, qualifications, and
             specialties.
           </p>
-        </div>
+        </div> -->
 
         <div class="section" id="sessions">
           <h3>Manage Sessions</h3>
@@ -262,7 +276,7 @@
           <ul style="list-style-type: none; padding: 0; margin: 0">
             <li style="margin-bottom: 15px">
               <a
-                href="../aptitude_test_guide.pdf"
+                href="aptitude_test_guide.pdf"
                 class="btn"
                 style="width: 100%; text-align: center"
                 >Aptitude Test Guide</a
@@ -317,23 +331,23 @@
 
     <script>
       var images = [
-        "../images/.jpg",
-        "../images/.jpg",
-        "../images/.jpg",
-        "../images/.jpg",
-        "../images/.jpg",
-        "../images/.jpg",
-        "../images/.jpg",
-        "../images/.jpg",
-        "../images/.jpg",
-        "../images/0.jpg",
+        "../images/1.jpg",
+        "../images/2.jpg",
+        "../images/3.jpg",
+        "../images/4.jpg",
+        "../images/5.jpg",
+        "../images/6.jpg",
+        "../images/7.jpg",
+        "../images/8.jpg",
+        "../images/9.jpg",
+        "../images/10.jpg",
       ];
 
       var currentIndex = 0;
 
       function showContent(sectionId) {
         // Hide the image gallery
-        document.getElementById("image-gallery").style.display = "none";
+        document.getElementById("image-gallery").style.display = "block";
 
         // Hide all sections
         var sections = document.querySelectorAll(".section");
