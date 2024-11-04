@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #2C3E50;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            color: white;
+        }
+
+        .sidebar h2 {
+            color: white;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 15px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2C3E50;
+            color: white;
+        }
+
+        .add-video-form input[type="text"], .add-video-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .add-video-form input[type="submit"] {
+            background-color: #2C3E50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .add-video-form input[type="submit"]:hover {
+            background-color: #1A242F;
+        }
+
+        .overview {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .overview .card {
+            flex: 1;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>Admin Dashboard</h2>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#counselors">View Counselors</a></li>
+            <li><a href="#students">View Students</a></li>
+            <li><a href="#videos">Add Motivational Videos</a></li>
+            <li><a href="#feedback">View Feedback</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+
+        <!-- Overview Section -->
+        <div id="overview" class="card">
+            <h3>Overview</h3>
+            <div class="overview">
+                <div class="card">
+                    <h4>Total Counselors</h4>
+                    <p>25</p>
+                </div>
+                <div class="card">
+                    <h4>Total Students</h4>
+                    <p>200</p>
+                </div>
+                <div class="card">
+                    <h4>Total Videos</h4>
+                    <p>15</p>
+                </div>
+                <div class="card">
+                    <h4>Total Feedbacks</h4>
+                    <p>50</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Counselors Section -->
+        <div id="counselors" class="card">
+            <h3>View Counselors</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Qualification</th>
+                        <th>Experience</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Masters in Psychology</td>
+                        <td>5 years</td>
+                        <td><button>Edit</button> <button>Deactivate</button></td>
+                    </tr>
+                    <!-- Add more counselors here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- View Students Section -->
+        <div id="students" class="card">
+            <h3>View Students</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Grade</th>
+                        <th>Career Interest</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>12th</td>
+                        <td>Engineering</td>
+                        <td><button>Edit</button> <button>Remove</button></td>
+                    </tr>
+                    <!-- Add more students here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Add Motivational Videos Section -->
+        <div id="videos" class="card">
+            <h3>Add Motivational Videos</h3>
+            <form class="add-video-form">
+                <input type="text" placeholder="Video Title">
+                <textarea placeholder="Video Description"></textarea>
+                <input type="file" accept="video/*">
+                <input type="submit" value="Upload Video">
+            </form>
+        </div>
+
+        <!-- View Feedback Section -->
+        <div id="feedback" class="card">
+            <h3>View Feedback</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Counselor</th>
+                        <th>Feedback</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>John Doe</td>
+                        <td>Very helpful session</td>
+                        <td>2024-11-02</td>
+                    </tr>
+                    <!-- Add more feedback here -->
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>

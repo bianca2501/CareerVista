@@ -19,7 +19,6 @@
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            position: relative;
         }
         h2 {
             color: #264a6c;
@@ -34,10 +33,22 @@
             color: white;
             text-align: center;
             font-size: 1.1em;
-            margin-top: 10px;
         }
         .btn:hover {
             background-color: #1e3a4d;
+        }
+        .btn-dashboard {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            background-color: #264a6c;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn-dashboard:hover {
+            background-color: #264a6c;
         }
         input[type="radio"] {
             margin-right: 10px;
@@ -47,29 +58,23 @@
             padding: 15px;
             border-radius: 8px;
             background-color: #e0f7fa;
-            color: #00796b;
+            color: #264a6c;
             font-size: 1.2em;
             text-align: center;
             display: none;
         }
-        .back-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-        }
     </style>
 </head>
 <body>
+    <a href="dashboard.html" class="btn-dashboard">Back to Dashboard</a>
     <div class="test-wrapper">
-        <div class="back-button">
-            <button type="button" class="btn" onclick="window.location.href='dashboard.html';">Back to Dashboard</button>
-        </div>
         <form id="aptitude-form">
             <div id="question-container"></div>
             <button type="submit" class="btn">Submit Answers</button>
         </form>
         <div id="result" class="result-message"></div>
     </div>
+
     <script>
         const questions = [
             {
@@ -234,41 +239,62 @@
         function displayQuestions() {
             shuffle(questions);
             const questionContainer = document.getElementById('question-container');
-            questions.forEach((q, index) => {
-                const questionElement = document.createElement('div');
-                questionElement.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
-                q.options.forEach(option => {
-                    questionElement.innerHTML += `
-                        <label>
-                            <input type="radio" name="question${index}" value="${option}" required>
-                            ${option}
-                        </label><br>
-                    `;
+            questions.forEach((questionData, index) => {
+                let questionHTML = `<div class="question-block"><h2>Question ${index + 1}</h2>`;
+                questionHTML += `<p>${questionData.question}</p>`;
+                questionData.options.forEach((option) => {
+                    questionHTML += `<label><input type="radio" name="question${index}" value="${option}"> ${option}</label><br>`;
                 });
-                questionContainer.appendChild(questionElement);
+                questionHTML += `</div>`;
+                questionContainer.innerHTML += questionHTML;
             });
         }
 
-        document.getElementById('aptitude-form').addEventListener('submit', function(event) {
-            event.preventDefault();
+        document.addEventListener('DOMContentLoaded', () => {
+            displayQuestions();
+        });
+
+        document.getElementById('aptitude-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
             const formData = new FormData(this);
-            let score = 0;
-            let resultHtml = '';
+            const userAnswers = [];
+            for (let [key, value] of formData.entries()) {
+                userAnswers.push(value);
+            }
+
+            const results = {
+                Science: 0,
+                Commerce: 0,
+                Arts: 0
+            };
 
             questions.forEach((q, index) => {
-                const userAnswer = formData.get(`question${index}`);
-                if (userAnswer === q.answer) {
-                    score++;
+                if (userAnswers[index] === q.answer) {
+                    if (q.category === "Numerical Reasoning" || q.category === "Mechanical Reasoning" || q.category === "Science") {
+                        results.Science++;
+                    } else if (q.category === "Logical Reasoning" || q.category === "Verbal Reasoning") {
+                        results.Commerce++;
+                    } else if (q.category === "Arts" || q.category === "Abstract Reasoning") {
+                        results.Arts++;
+                    }
                 }
             });
 
-            resultHtml = `Your score: ${score} out of ${questions.length}.`;
-            const resultContainer = document.getElementById('result');
-            resultContainer.innerHTML = resultHtml;
-            resultContainer.style.display = 'block';
-        });
+            let bestStream = "Arts";
+            let maxScore = results.Arts;
 
-        displayQuestions();
+            for (const [stream, score] of Object.entries(results)) {
+                if (score > maxScore) {
+                    bestStream = stream;
+                    maxScore = score;
+                }
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `Based on your answers, you are best suited for the <strong>${bestStream}</strong> stream. For more accurate results, please visit a counselor of your preference.`;
+            resultDiv.style.display = 'block';
+        });
     </script>
 </body>
 </html>
