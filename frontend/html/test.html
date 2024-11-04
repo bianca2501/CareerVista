@@ -33,6 +33,7 @@
             color: white;
             text-align: center;
             font-size: 1.1em;
+            cursor: pointer;
         }
         .btn:hover {
             background-color: #1e3a4d;
@@ -48,7 +49,7 @@
             border-radius: 5px;
         }
         .btn-dashboard:hover {
-            background-color: #264a6c;
+            background-color: #1e3a4d;
         }
         input[type="radio"] {
             margin-right: 10px;
@@ -63,21 +64,34 @@
             text-align: center;
             display: none;
         }
+        .access-denied {
+            background-color: #ffcccc;
+            color: #cc0000;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <a href="dashboard.html" class="btn-dashboard">Back to Dashboard</a>
     <div class="test-wrapper">
-        <form id="aptitude-form">
-            <div id="question-container"></div>
-            <button type="submit" class="btn">Submit Answers</button>
-        </form>
-        <div id="result" class="result-message"></div>
+        <div id="test-content">
+            <form id="aptitude-form">
+                <div id="question-container"></div>
+                <button type="submit" class="btn">Submit Answers</button>
+            </form>
+            <div id="result" class="result-message"></div>
+        </div>
+        <div id="access-denied" class="access-denied" style="display: none;">
+            <h2>Access Denied</h2>
+            <p>You have already submitted the test and cannot access it again.</p>
+        </div>
     </div>
 
     <script>
         const questions = [
-            {
+        {
                 question: "Which word is most opposite in meaning to 'Ephemeral'?",
                 options: ["Transient", "Permanent", "Momentary", "Fleeting"],
                 category: "Verbal Reasoning",
@@ -113,121 +127,133 @@
                 category: "Abstract Reasoning",
                 answer: "□"
             },
-            {
-                question: "In a pulley system, if the effort applied is 100 N and the load lifted is 300 N, what is the mechanical advantage?",
-                options: ["3", "4", "5", "6"],
-                category: "Mechanical Reasoning",
-                answer: "3"
-            },
-            {
-                question: "Which of the following is a metal?",
-                options: ["Oxygen", "Hydrogen", "Iron", "Carbon"],
-                category: "Science",
-                answer: "Iron"
-            },
-            {
-                question: "What is the chemical formula of water?",
-                options: ["H2O", "O2", "CO2", "H2SO4"],
-                category: "Science",
-                answer: "H2O"
-            },
-            {
-                question: "What is the capital city of France?",
-                options: ["Berlin", "London", "Paris", "Rome"],
-                category: "General Knowledge",
-                answer: "Paris"
-            },
-            {
-                question: "Which planet is closest to the sun?",
-                options: ["Earth", "Mars", "Mercury", "Venus"],
-                category: "Science",
-                answer: "Mercury"
-            },
-            {
-                question: "Which gas do plants absorb from the atmosphere during photosynthesis?",
-                options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
-                category: "Science",
-                answer: "Carbon Dioxide"
-            },
-            {
-                question: "Which continent is the Sahara Desert located in?",
-                options: ["Africa", "Asia", "Europe", "Australia"],
-                category: "General Knowledge",
-                answer: "Africa"
-            },
-            {
-                question: "What is the result of 6 × 9?",
-                options: ["54", "64", "72", "84"],
-                category: "Numerical Reasoning",
-                answer: "54"
-            },
-            {
-                question: "Which animal is known as the king of the jungle?",
-                options: ["Lion", "Tiger", "Elephant", "Giraffe"],
-                category: "General Knowledge",
-                answer: "Lion"
-            },
-            {
-                question: "Solve for x: 5x + 3 = 23",
-                options: ["2", "3", "4", "5"],
-                category: "Numerical Reasoning",
-                answer: "4"
-            },
-            {
-                question: "What is the boiling point of water at sea level?",
-                options: ["90°C", "100°C", "110°C", "120°C"],
-                category: "Science",
-                answer: "100°C"
-            },
-            {
-                question: "Which of the following is a prime number?",
-                options: ["4", "6", "9", "11"],
-                category: "Mathematics",
-                answer: "11"
-            },
-            {
-                question: "Who wrote the play 'Romeo and Juliet'?",
-                options: ["Charles Dickens", "Mark Twain", "William Shakespeare", "George Orwell"],
-                category: "Arts",
-                answer: "William Shakespeare"
-            },
-            {
-                question: "In music, what is the symbol for sharp?",
-                options: ["#", "b", "!", "&"],
-                category: "Arts",
-                answer: "#"
-            },
-            {
-                question: "Which figure is a triangle?",
-                options: ["△", "◯", "□", "◾"],
-                category: "Abstract Reasoning",
-                answer: "△"
-            },
-            {
-                question: "What is the next letter in the sequence: A, C, E, G, ___?",
-                options: ["H", "I", "J", "K"],
-                category: "Logical Reasoning",
-                answer: "I"
-            },
-            {
-                question: "Which of the following is a renewable energy source?",
-                options: ["Coal", "Oil", "Wind", "Natural Gas"],
-                category: "Science",
-                answer: "Wind"
-            },
-            {
-                question: "What is the process of splitting an atom's nucleus called?",
-                options: ["Fusion", "Fission", "Combustion", "Evaporation"],
-                category: "Science",
-                answer: "Fission"
-            },
-            {
-                question: "What color is produced when blue and yellow are mixed?",
-                options: ["Green", "Purple", "Orange", "Brown"],
-                category: "Arts",
-                answer: "Green"
-            }
+            // {
+            //     question: "In a pulley system, if the effort applied is 100 N and the load lifted is 300 N, what is the mechanical advantage?",
+            //     options: ["3", "4", "5", "6"],
+            //     category: "Mechanical Reasoning",
+            //     answer: "3"
+            // },
+            // {
+            //     question: "Which of the following is a metal?",
+            //     options: ["Oxygen", "Hydrogen", "Iron", "Carbon"],
+            //     category: "Science",
+            //     answer: "Iron"
+            // },
+            // {
+            //     question: "What is the chemical formula of water?",
+            //     options: ["H2O", "O2", "CO2", "H2SO4"],
+            //     category: "Science",
+            //     answer: "H2O"
+            // },
+            // {
+            //     question: "What is the capital city of France?",
+            //     options: ["Berlin", "London", "Paris", "Rome"],
+            //     category: "General Knowledge",
+            //     answer: "Paris"
+            // },
+            // {
+            //     question: "Which planet is closest to the sun?",
+            //     options: ["Earth", "Mars", "Mercury", "Venus"],
+            //     category: "Science",
+            //     answer: "Mercury"
+            // },
+            // {
+            //     question: "Which gas do plants absorb from the atmosphere during photosynthesis?",
+            //     options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+            //     category: "Science",
+            //     answer: "Carbon Dioxide"
+            // },
+            // {
+            //     question: "Which continent is the Sahara Desert located in?",
+            //     options: ["Africa", "Asia", "Europe", "Australia"],
+            //     category: "General Knowledge",
+            //     answer: "Africa"
+            // },
+            // {
+            //     question: "What is the result of 6 × 9?",
+            //     options: ["54", "64", "72", "84"],
+            //     category: "Numerical Reasoning",
+            //     answer: "54"
+            // },
+            // {
+            //     question: "Which animal is known as the king of the jungle?",
+            //     options: ["Lion", "Tiger", "Elephant", "Giraffe"],
+            //     category: "General Knowledge",
+            //     answer: "Lion"
+            // },
+            // {
+            //     question: "Solve for x: 5x + 3 = 23",
+            //     options: ["2", "3", "4", "5"],
+            //     category: "Numerical Reasoning",
+            //     answer: "4"
+            // },
+            // {
+            //     question: "What is the boiling point of water at sea level?",
+            //     options: ["90°C", "100°C", "110°C", "120°C"],
+            //     category: "Science",
+            //     answer: "100°C"
+            // },
+            // {
+            //     question: "Which of the following is a prime number?",
+            //     options: ["4", "6", "9", "11"],
+            //     category: "Mathematics",
+            //     answer: "11"
+            // },
+            // {
+            //     question: "Who wrote the play 'Romeo and Juliet'?",
+            //     options: ["Charles Dickens", "Mark Twain", "William Shakespeare", "George Orwell"],
+            //     category: "Arts",
+            //     answer: "William Shakespeare"
+            // },
+            // {
+            //     question: "In music, what is the symbol for sharp?",
+            //     options: ["#", "b", "!", "&"],
+            //     category: "Arts",
+            //     answer: "#"
+            // },
+            // {
+            //     question: "Which figure is a triangle?",
+            //     options: ["△", "◯", "□", "◾"],
+            //     category: "Abstract Reasoning",
+            //     answer: "△"
+            // },
+            // {
+            //     question: "What is the next letter in the sequence: A, C, E, G, ___?",
+            //     options: ["H", "I", "J", "K"],
+            //     category: "Logical Reasoning",
+            //     answer: "I"
+            // },
+            // {
+            //     question: "Which of the following is a renewable energy source?",
+            //     options: ["Coal", "Oil", "Wind", "Natural Gas"],
+            //     category: "Science",
+            //     answer: "Wind"
+            // },
+            // {
+            //     question: "What is the process of splitting an atom's nucleus called?",
+            //     options: ["Fusion", "Fission", "Combustion", "Evaporation"],
+            //     category: "Science",
+            //     answer: "Fission"
+            // },
+            // {
+            //     question: "What color is produced when blue and yellow are mixed?",
+            //     options: ["Green", "Purple", "Orange", "Brown"],
+            //     category: "Arts",
+            //     answer: "Green"
+            // }
         ];
+
+        async function checkTestSubmission(userId) {
+            try {
+                const response = await fetch(`http://localhost:4000/user/test-submission/${userId}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
+                return data.hasSubmitted; // Expecting a boolean response
+            } catch (error) {
+                console.error('Error checking test submission:', error);
+                return false; // Default to false if error occurs
+            }
+        }
 
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -252,6 +278,64 @@
                     </label><br>
                 `;
             });
+        }
+
+        async function storeTestResult(userId, bestStream) {
+            try {
+                const response = await fetch('http://localhost:4000/user/save-result', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userId: userId,
+                        testResult: bestStream
+                    })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert('Test result stored successfully.');
+                } else {
+                    alert('Failed to store test result: ' + data.message);
+                }
+            } catch (error) {
+                console.log('Error:', JSON.stringify(error));
+                alert('An error occurred while storing the test result.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userId = localStorage.getItem('userId');
+            if (userId) {
+                const hasSubmitted = await checkTestSubmission(userId);
+                if (hasSubmitted) {
+                    // Show access denied message
+                    document.getElementById('test-content').style.display = 'none';
+                    document.getElementById('access-denied').style.display = 'block';
+                } else {
+                    // Display questions
+                    displayQuestions();
+                }
+            } else {
+                alert('User ID not found in local storage. Please log in.');
+                window.location.href = 'login.html'; // Redirect to login page if no userId
+            }
+
+            document.getElementById('aptitude-form').addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const formData = new FormData(this);
+                const userAnswers = [];
+                for (let [key, value] of formData.entries()) {
+                    userAnswers.push(value);
+                }
+
+                const results = {
+                    Science: 0,
+                    Commerce: 0,
+                    Arts: 0
+                };
             questionContainer.appendChild(questionDiv);
         });
 
@@ -272,6 +356,17 @@
                 Arts: 0
             };
 
+                questions.forEach((q, index) => {
+                    if (userAnswers[index] === q.answer) {
+                        if (q.category === "Numerical Reasoning" || q.category === "Mechanical Reasoning" || q.category === "Science") {
+                            results.Science++;
+                        } else if (q.category === "Logical Reasoning" || q.category === "Verbal Reasoning") {
+                            results.Commerce++;
+                        } else if (q.category === "Arts" || q.category === "Abstract Reasoning") {
+                            results.Arts++;
+                        }
+                    }
+                });
             // Evaluate answers
             userAnswers.forEach((answer, index) => {
                 if (answer === questions[index].answer) {
@@ -291,10 +386,18 @@
                 }
             });
 
+                let bestStream = "Arts";
+                let maxScore = results.Arts;
             // Determine the best stream
             let bestStream = "Arts"; // Default
             let maxScore = results.Arts;
 
+                for (const [stream, score] of Object.entries(results)) {
+                    if (score > maxScore) {
+                        bestStream = stream;
+                        maxScore = score;
+                    }
+                }
             for (const stream in results) {
                 if (results[stream] > maxScore) {
                     bestStream = stream;
@@ -302,6 +405,13 @@
                 }
             }
 
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `Based on your answers, you are best suited for the <strong>${bestStream}</strong> stream. For more accurate results, please visit a counselor of your preference.`;
+                resultDiv.style.display = 'block';
+
+                // Store result in database
+                await storeTestResult(userId, bestStream);
+            });
             // Display the result
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = `Based on your answers, you are best suited for the <strong>${bestStream}</strong> stream!`;
