@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Session</title>
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f9;
+    }
+
+    .container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    }
+
+    h1 {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    }
+
+    .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+    }
+
+    label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    }
+
+    select, input[type="date"], button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    font-size: 1em;
+    }
+
+    button {
+    background-color: #264a6c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    }
+
+    button:hover {
+    background-color: #264a6c;
+    }
+
+    #confirmation {
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #264a6c;
+    }
+
+</style>
+<body>
+  <div class="container">
+    <h1>Book a Counseling Session</h1>
+    <div class="form-group">
+      <label for="counselor">Choose a Counselor:</label>
+      <select id="counselor">
+        <option value="Deepa Panakal">Deepa Panakal</option>
+        <option value="David Woods">David Woods</option>
+        <option value="Ronnie Dawns">Ronnie Dawns</option>
+        <option value="Emily Carpenter">Emily Carpenter</option>
+        <option value="Lisa Brown">Lisa Brown</option>
+        <option value="Sarah Thompson">Sarah Thompson</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="date">Select a Date:</label>
+      <input type="date" id="date">
+    </div>
+    <div class="form-group">
+      <label for="time">Available Time Slots:</label>
+      <select id="time">
+        <!-- Time slots will be populated by JavaScript -->
+      </select>
+    </div>
+    <button id="bookNow" onclick="bookSession()">Book Now</button>
+    <div id="confirmation"></div>
+  </div>
+  <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        const timeSlots = ["10:00 AM", "11:00 AM", "2:00 PM", "3:00 PM", "4:00 PM"];
+        const timeSelect = document.getElementById("time");
+
+        // Populate time slots
+        timeSlots.forEach(slot => {
+            const option = document.createElement("option");
+            option.value = slot;
+            option.textContent = slot;
+            timeSelect.appendChild(option);
+        });
+        });
+
+        function bookSession() {
+        const counselor = document.getElementById("counselor").value;
+        const date = document.getElementById("date").value;
+        const time = document.getElementById("time").value;
+        const confirmation = document.getElementById("confirmation");
+
+        if (counselor && date && time) {
+            confirmation.textContent = `Session booked with ${counselor} on ${date} at ${time}.`;
+        } else {
+            confirmation.textContent = "Please fill out all fields to book a session.";
+        }
+        }
+
+  </script>
+</body>
+</html>
