@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import bcrypt from "bcrypt";
-import { CounselorModel, UserModel, VideoModel, FeedbackModel } from "./model.js"; // Ensure all models are imported
+import { CounselorModel, UserModel, VideoModel, FeedbackModel } from "./model.js";
 
 dotenv.config();
 
@@ -47,7 +47,6 @@ app.post("/user/register", async (req, res) => {
 
     // Hash the password before storing it
     const hashedPassword = await bcrypt.hash(password, 10);
-
     await UserModel.create({ name, email, password: hashedPassword, username });
     res.status(200).json({ message: "User registered" });
   } catch (error) {
@@ -66,7 +65,6 @@ app.post("/user/login", async (req, res) => {
 
   try {
     const user = await UserModel.findOne({ username });
-
     if (!user) {
       res.status(400).json({ message: "User not found" });
       return;
@@ -153,7 +151,6 @@ app.post("/counselor/register", async (req, res) => {
 
     // Hash the password before storing it
     const hashedPassword = await bcrypt.hash(password, 10);
-
     await CounselorModel.create({
       name,
       email,
@@ -220,6 +217,33 @@ app.get('/api/stats', async (req, res) => {
   }
 });
 
+// Feedback submission route
+app.post("/submit-feedback", async (req, res) => {
+  console.log("Received feedback submission:", req.body); // Log incoming data
+  try {
+    const { userId, counselorId, feedbackText, rating } = req.body;
+
+    if (!userId || !counselorId || !feedbackText || !rating) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    // Create a new feedback document
+    const feedback = new FeedbackModel({
+      userId,
+      counselorId,
+      feedbackText,
+      rating,
+    });
+
+    // Save the feedback to the database
+    await feedback.save();
+    res.status(201).json({ message: "Feedback submitted successfully", feedback });
+  } catch (error) {
+    console.error("Error submitting feedback:", error);
+    res.status(500).json({ error: "An error occurred while submitting feedback" });
+  }
+});
+
 // Endpoint to get all counselors
 app.get("/api/counselors", async (req, res) => {
   try {
@@ -245,7 +269,7 @@ app.get("/api/students", async (req, res) => {
 // Endpoint to get all videos
 app.get("/api/videos", async (req, res) => {
   try {
-    const videos = await VideoModel.find(); // Ensure you have a VideoModel defined
+    const videos = await VideoModel.find();
     return res.status(200).json(videos);
   } catch (error) {
     console.error("Error fetching videos:", error);
@@ -253,30 +277,13 @@ app.get("/api/videos", async (req, res) => {
   }
 });
 
-// Endpoint to get all feedback
-app.get("/api/feedback", async (req, res) => {
-  try {
-    const feedbacks = await FeedbackModel.find().populate('student counselor'); // Adjust this as necessary
-    return res.status(200).json(feedbacks);
-  } catch (error) {
-    console.error("Error fetching feedback:", error);
-    return res.status(500).json({ message: "Server error" });
-  }
-});
-
 // Connect to MongoDB and start the server
-mongoose
-  .connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log("Connected to MongoDB");
     app.listen(port, () => {
-      console.log(`Server running on http://localhost:${port}`);
+      console.log(`Server is running on http://localhost:${port}`);
     });
   })
   .catch((error) => {
-    console.error("Error connecting to MongoDB:", error);
+    console.error("MongoDB connection error:", error);
   });
-

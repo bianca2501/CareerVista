@@ -77,10 +77,6 @@
             color: white;
         }
 
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
         .add-user-form input[type="text"], .add-user-form textarea {
             width: 100%;
             padding: 10px;
@@ -111,25 +107,6 @@
             flex: 1;
             margin: 0 10px;
         }
-
-        .message {
-            color: green;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        button {
-            background-color: #3498DB;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #2980B9;
-        }
     </style>
 </head>
 <body>
@@ -140,7 +117,6 @@
             <li><a href="#overview">Overview</a></li>
             <li><a href="#counselors">View Counselors</a></li>
             <li><a href="#students">View Students</a></li>
-            <li><a href="#register">Register User</a></li>
             <li><a href="#feedback">View Feedback</a></li>
         </ul>
     </div>
@@ -198,28 +174,6 @@
             </table>
         </div>
 
-        <!-- Register User Section -->
-        <div id="register" class="card">
-            <h3>Register User</h3>
-            <h4>Register Counselor</h4>
-            <form class="add-user-form" id="counselorForm">
-                <input type="text" id="counselorName" placeholder="Counselor Name" required>
-                <input type="text" id="counselorQualification" placeholder="Qualification" required>
-                <input type="text" id="counselorExperience" placeholder="Experience" required>
-                <input type="submit" value="Register Counselor">
-                <p class="message" id="counselorMessage"></p>
-            </form>
-
-            <h4>Register Student</h4>
-            <form class="add-user-form" id="studentForm">
-                <input type="text" id="studentName" placeholder="Student Name" required>
-                <input type="text" id="studentGrade" placeholder="Grade" required>
-                <input type="text" id="studentCareerInterest" placeholder="Career Interest" required>
-                <input type="submit" value="Register Student">
-                <p class="message" id="studentMessage"></p>
-            </form>
-        </div>
-
         <!-- View Feedback Section -->
         <div id="feedback" class="card">
             <h3>View Feedback</h3>
@@ -260,31 +214,25 @@
             studentTableBody.innerHTML = '';
 
             // Populate counselors table
-            counselors.forEach((counselor, index) => {
+            counselors.forEach(counselor => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${counselor.name}</td>
                     <td>${counselor.qualification}</td>
                     <td>${counselor.experience}</td>
-                    <td>
-                        <button onclick="editCounselor(${index})">Edit</button>
-                        <button onclick="deleteCounselor(${index})">Deactivate</button>
-                    </td>
+                    <td><button onclick="editCounselor('${counselor.name}')">Edit</button> <button onclick="deactivateCounselor('${counselor.name}')">Deactivate</button></td>
                 `;
                 counselorTableBody.appendChild(row);
             });
 
             // Populate students table
-            students.forEach((student, index) => {
+            students.forEach(student => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${student.name}</td>
                     <td>${student.grade}</td>
                     <td>${student.careerInterest}</td>
-                    <td>
-                        <button onclick="editStudent(${index})">Edit</button>
-                        <button onclick="deleteStudent(${index})">Remove</button>
-                    </td>
+                    <td><button onclick="editStudent('${student.name}')">Edit</button> <button onclick="removeStudent('${student.name}')">Remove</button></td>
                 `;
                 studentTableBody.appendChild(row);
             });
@@ -294,52 +242,29 @@
             document.getElementById('totalStudents').textContent = students.length;
         }
 
-        // Function to register a new counselor
-        document.getElementById('counselorForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('counselorName').value;
-            const qualification = document.getElementById('counselorQualification').value;
-            const experience = document.getElementById('counselorExperience').value;
-
-            const counselors = JSON.parse(localStorage.getItem('counselors')) || [];
-            counselors.push({ name, qualification, experience });
-            localStorage.setItem('counselors', JSON.stringify(counselors));
-            document.getElementById('counselorMessage').textContent = 'Counselor registered successfully!';
-            loadUsers();
-        });
-
-        // Function to register a new student
-        document.getElementById('studentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('studentName').value;
-            const grade = document.getElementById('studentGrade').value;
-            const careerInterest = document.getElementById('studentCareerInterest').value;
-
-            const students = JSON.parse(localStorage.getItem('students')) || [];
-            students.push({ name, grade, careerInterest });
-            localStorage.setItem('students', JSON.stringify(students));
-            document.getElementById('studentMessage').textContent = 'Student registered successfully!';
-            loadUsers();
-        });
-
-        // Function to delete a counselor
-        function deleteCounselor(index) {
-            const counselors = JSON.parse(localStorage.getItem('counselors')) || [];
-            counselors.splice(index, 1);
-            localStorage.setItem('counselors', JSON.stringify(counselors));
-            loadUsers();
+        // Edit Counselor (placeholder function)
+        function editCounselor(name) {
+            alert(`Edit counselor: ${name}`); // Implement edit functionality
         }
 
-        // Function to delete a student
-        function deleteStudent(index) {
-            const students = JSON.parse(localStorage.getItem('students')) || [];
-            students.splice(index, 1);
-            localStorage.setItem('students', JSON.stringify(students));
-            loadUsers();
+        // Deactivate Counselor (placeholder function)
+        function deactivateCounselor(name) {
+            alert(`Deactivate counselor: ${name}`); // Implement deactivate functionality
+        }
+
+        // Edit Student (placeholder function)
+        function editStudent(name) {
+            alert(`Edit student: ${name}`); // Implement edit functionality
+        }
+
+        // Remove Student (placeholder function)
+        function removeStudent(name) {
+            alert(`Remove student: ${name}`); // Implement remove functionality
         }
 
         // Load users on page load
         window.onload = loadUsers;
+
     </script>
 
 </body>

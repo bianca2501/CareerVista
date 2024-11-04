@@ -16,33 +16,27 @@
         background-color: #f4f4f9;
         color: #333;
       }
-
       .dashboard-wrapper {
         display: flex;
         height: 100vh;
       }
-
       .sidebar {
         width: 250px;
         background-color: #264a6c;
         color: white;
         padding: 20px;
       }
-
       .sidebar h2 {
         text-align: center;
         margin-bottom: 30px;
       }
-
       .sidebar ul {
         list-style: none;
         padding: 0;
       }
-
       .sidebar ul li {
         margin-bottom: 20px;
       }
-
       .sidebar ul li a {
         color: white;
         text-decoration: none;
@@ -50,66 +44,54 @@
         display: flex;
         align-items: center;
       }
-
       .sidebar ul li a i {
         margin-right: 10px;
       }
-
       .main-content {
         flex-grow: 1;
         padding: 40px;
       }
-
       .section {
         margin-bottom: 40px;
       }
-
       .section h3 {
         border-bottom: 2px solid #264a6c;
         padding-bottom: 10px;
         margin-bottom: 20px;
         font-size: 1.8em;
       }
-
       .section p {
         font-size: 1.1em;
         line-height: 1.6;
       }
-
       /* Hide content sections by default */
       .section {
         display: none;
       }
-
       /* Show content section when active */
       .section.active {
         display: block;
       }
-
       /* Styles for the form */
       form {
         display: flex;
         flex-direction: column;
       }
-
       .form-field {
         margin-bottom: 15px;
       }
-
       .form-field label {
         font-weight: bold;
         margin-bottom: 5px;
       }
-
       .form-field input,
-      #feedback textarea,
-      #rating {
+      .form-field textarea,
+      .form-field select {
         padding: 10px;
         font-size: 1em;
         border: 1px solid #ccc;
         border-radius: 5px;
       }
-
       .btn {
         padding: 10px 20px;
         background-color: #264a6c;
@@ -119,15 +101,12 @@
         cursor: pointer;
         font-size: 1.2em;
       }
-
       .btn:hover {
         background-color: #3a5a7c;
       }
-
       .counselor-list {
         margin-top: 20px;
       }
-
       .counselor-item {
         border: 1px solid #ccc;
         border-radius: 5px;
@@ -137,28 +116,23 @@
         justify-content: space-between;
         align-items: center;
       }
-
       .counselor-details {
         flex-grow: 1;
       }
-
       .counselor-name {
         font-weight: bold;
         font-size: 1.2em;
       }
-
       .view-reviews {
         color: #264a6c;
         text-decoration: underline;
         cursor: pointer;
       }
-
       /* Responsive design */
       @media (max-width: 768px) {
         .dashboard-wrapper {
           flex-direction: column;
         }
-
         .sidebar {
           width: 100%;
           text-align: center;
@@ -171,11 +145,6 @@
       <div class="sidebar">
         <h2>Counselor Dashboard</h2>
         <ul>
-          <!-- <li>
-            <a href="#" onclick="showContent('profile')"
-              ><i class="bx bx-user"></i> My Profile</a
-            >
-          </li> -->
           <li>
             <a href="#" onclick="showContent('sessions')"
               ><i class="bx bx-history"></i> Manage Sessions</a
@@ -195,7 +164,6 @@
       </div>
 
       <div class="main-content">
-        <!-- Default Image Gallery -->
         <div id="image-gallery" class="image-gallery">
           <img
             id="slideshow-image"
@@ -203,15 +171,6 @@
             alt="Slideshow Image"
           />
         </div>
-
-        <!-- Sections for the content -->
-        <!-- <div class="section" id="profile">
-          <h3>My Profile</h3>
-          <p>
-            Details about the counselor's profile, qualifications, and
-            specialties.
-          </p>
-        </div> -->
 
         <div class="section" id="sessions">
           <h3>Manage Sessions</h3>
@@ -247,14 +206,39 @@
                 <span class="view-reviews" onclick="showReviews('Chris Shukla')"
                   >View Reviews</span
                 >
-                <a href="vc.html">
-                  <button class="btn" onclick="joinSession('Chris Shukla')">
-                    Join Session
-                  </button>
-                </a>
-              </button>
+              </div>
+              <a href="#" onclick="showContent('review')">
+                <button class="btn">Submit Review</button>
+              </a>
             </div>
           </div>
+        </div>
+
+        <!-- Review Section -->
+        <div class="section" id="review">
+          <h3>Submit Your Review</h3>
+          <p>Share your experience to help improve future counseling sessions.</p>
+          <form id="review-form" onsubmit="submitReview(event)">
+            <label for="review-message">Your Review:</label>
+            <textarea
+              id="review-message"
+              name="review-message"
+              rows="5"
+              required
+            ></textarea>
+
+            <label for="review-rating">Rating:</label>
+            <select id="review-rating" name="review-rating" required>
+              <option value="">Select a rating</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+
+            <button type="submit" class="btn">Submit Review</button>
+          </form>
         </div>
 
         <div class="section" id="resources">
@@ -273,7 +257,6 @@
                 >Aptitude Test Guide</a
               >
             </li>
-            
             <li style="margin-bottom: 15px">
               <a
                 href="career-paths.html"
@@ -296,7 +279,7 @@
         <div class="section" id="feedback">
           <h3>Student Feedback</h3>
           <p>Your feedback helps improve the counseling process.</p>
-          <form>
+          <form id="feedback-form" onsubmit="submitFeedback(event)">
             <label for="feedback-message">Your Feedback Message:</label>
             <textarea
               id="feedback-message"
@@ -315,55 +298,57 @@
               <option value="5">5</option>
             </select>
 
-            <button type="submit">Submit Feedback</button>
+            <button type="submit" class="btn">Submit Feedback</button>
           </form>
         </div>
       </div>
     </div>
 
     <script>
-      var images = [
-        "../images/1.jpg",
-        "../images/2.jpg",
-        "../images/3.jpg",
-        "../images/4.jpg",
-        "../images/5.jpg",
-        "../images/6.jpg",
-        "../images/7.jpg",
-        "../images/8.jpg",
-        "../images/9.jpg",
-        "../images/10.jpg",
-      ];
+      function showContent(contentId) {
+        const sections = document.querySelectorAll('.section');
+        sections.forEach((section) => {
+          section.classList.remove('active');
+        });
+        document.getElementById(contentId).classList.add('active');
+      }
 
-      var currentIndex = 0;
+      function submitReview(event) {
+        event.preventDefault();
+        const reviewMessage = document.getElementById('review-message').value;
+        const reviewRating = document.getElementById('review-rating').value;
 
-      function showContent(sectionId) {
-        // Hide the image gallery
-        document.getElementById("image-gallery").style.display = "none";
+        // Here, you can handle the submission of the review
+        console.log('Review submitted:', { reviewMessage, reviewRating });
 
-        // Hide all sections
-        var sections = document.querySelectorAll(".section");
-        sections.forEach(function (section) {
-          section.classList.remove("active");
+        // Clear the form
+        document.getElementById('review-form').reset();
+        alert('Review submitted successfully!');
+      }
+
+      function submitFeedback(event) {
+        event.preventDefault();
+        const feedbackMessage = document.getElementById('feedback-message').value;
+        const feedbackRating = document.getElementById('rating').value;
+
+        // Handle feedback submission here
+        console.log('Feedback submitted:', {
+          feedbackMessage,
+          feedbackRating,
         });
 
-        // Show the selected section
-        var selectedSection = document.getElementById(sectionId);
-        if (selectedSection) {
-          selectedSection.classList.add("active");
-        }
+        // Clear the form
+        document.getElementById('feedback-form').reset();
+        alert('Feedback submitted successfully!');
       }
 
-      function changeImage() {
-        currentIndex = (currentIndex + 1) % images.length;
-        document.getElementById("slideshow-image").src = images[currentIndex];
+      function joinSession(counselor) {
+        console.log('Joining session with', counselor);
       }
 
-      // Change the image every 5 minutes (300000 milliseconds)
-      setInterval(changeImage, 300000);
-
-      // Show default content
-      showContent("profile");
+      function showReviews(counselor) {
+        alert('Showing reviews for ' + counselor);
+      }
     </script>
   </body>
 </html>
