@@ -2,8 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
-import bcrypt from "bcrypt"; // Import bcrypt for password hashing
-import { CounselorModel, UserModel } from "./model.js";
+import bcrypt from "bcrypt";
+import { CounselorModel, UserModel, VideoModel, FeedbackModel } from "./model.js"; // Ensure all models are imported
+
 dotenv.config();
 
 const app = express();
@@ -96,7 +97,6 @@ app.post("/user/save-result", async (req, res) => {
 
   try {
     const user = await UserModel.findById(userId);
-    console.log(userId);
     if (!user) {
       res.status(404).json({ message: "User not found" });
       return;
@@ -116,18 +116,18 @@ app.post("/user/save-result", async (req, res) => {
 app.get('/user/test-submission/:userId', async (req, res) => {
   const userId = req.params.userId;
 
-  // Replace with your database check logic
   const user = await UserModel.findById(userId);
+  if (!user) {
+      return res.status(404).json({ message: "User not found" });
+  }
 
-  const userTestRecord = user.test_result
-
+  const userTestRecord = user.test_result;
   if (userTestRecord) {
       return res.json({ hasSubmitted: true });
   } else {
       return res.json({ hasSubmitted: false });
   }
 });
-
 
 // Counselor registration endpoint
 app.post("/counselor/register", async (req, res) => {
@@ -197,15 +197,70 @@ app.post("/counselor/login", async (req, res) => {
   }
 });
 
+// Route to get total number of counselors and students
+app.get('/api/stats', async (req, res) => {
+  try {
+    const counselorCount = await CounselorModel.countDocuments();
+    const studentCount = await UserModel.countDocuments(); // Assuming UserModel is for students
+    const videoCount = await VideoModel.countDocuments(); // Assuming VideoModel is for videos
+    const feedbackCount = await FeedbackModel.countDocuments(); // Assuming FeedbackModel is for feedbacks
+
+    return res.status(200).json({
+      totalCounselors: counselorCount,
+      totalStudents: studentCount,
+      totalVideos: videoCount,
+      totalFeedbacks: feedbackCount,
+    });
+  } catch (error) {
+    console.error('Error fetching counts:', error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Endpoint to get all counselors
+app.get("/api/counselors", async (req, res) => {
+  try {
+    const counselors = await CounselorModel.find();
+    return res.status(200).json(counselors);
+  } catch (error) {
+    console.error("Error fetching counselors:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Endpoint to get all students (assuming UserModel represents students)
+app.get("/api/students", async (req, res) => {
+  try {
+    const students = await UserModel.find();
+    return res.status(200).json(students);
+  } catch (error) {
+    console.error("Error fetching students:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Endpoint to get all videos
+app.get("/api/videos", async (req, res) => {
+  try {
+    const videos = await VideoModel.find(); // Ensure you have a VideoModel defined
+    return res.status(200).json(videos);
+  } catch (error) {
+    console.error("Error fetching videos:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Endpoint to get all feedback
+app.get("/api/feedback", async (req, res) => {
+  try {
+    const feedbacks = await FeedbackModel.find().populate('student counselor'); // Adjust this as necessary
+    return res.status(200).json(feedbacks);
+  } catch (error) {
+    console.error("Error fetching feedback:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
 // Connect to MongoDB and start the server
 mongoose
-  .connect(MONGO_URI)
-  .then(() => {
-    console.log("MongoDB Atlas Connection successful");
-    app.listen(port, () => {
-      console.log(`Server listening on port ${port}`);
-    });
-  })
-  .catch((err) => {
-    console.log("Error connecting to MongoDB:", err);
-  });
+ 

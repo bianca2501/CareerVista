@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
             background-color: #f4f4f9;
             color: #333;
         }
+
         .test-wrapper {
             max-width: 800px;
             margin: 0 auto;
@@ -20,9 +22,11 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         h2 {
             color: #264a6c;
         }
+
         .btn {
             display: block;
             width: 100%;
@@ -35,9 +39,11 @@
             font-size: 1.1em;
             cursor: pointer;
         }
+
         .btn:hover {
             background-color: #1e3a4d;
         }
+
         .btn-dashboard {
             position: fixed;
             top: 10px;
@@ -48,12 +54,15 @@
             text-decoration: none;
             border-radius: 5px;
         }
+
         .btn-dashboard:hover {
             background-color: #1e3a4d;
         }
+
         input[type="radio"] {
             margin-right: 10px;
         }
+
         .result-message {
             margin-top: 20px;
             padding: 15px;
@@ -64,6 +73,7 @@
             text-align: center;
             display: none;
         }
+
         .access-denied {
             background-color: #ffcccc;
             color: #cc0000;
@@ -73,6 +83,7 @@
         }
     </style>
 </head>
+
 <body>
     <a href="dashboard.html" class="btn-dashboard">Back to Dashboard</a>
     <div class="test-wrapper">
@@ -91,7 +102,7 @@
 
     <script>
         const questions = [
-        {
+            {
                 question: "Which word is most opposite in meaning to 'Ephemeral'?",
                 options: ["Transient", "Permanent", "Momentary", "Fleeting"],
                 category: "Verbal Reasoning",
@@ -278,7 +289,7 @@
                     </label><br>
                 `;
             });
-        }
+        })
 
         async function storeTestResult(userId, bestStream) {
             try {
@@ -336,25 +347,25 @@
                     Commerce: 0,
                     Arts: 0
                 };
-            questionContainer.appendChild(questionDiv);
-        });
-
-        // Form submission
-        document.getElementById('aptitude-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const userAnswers = [];
-
-            questions.forEach((q, index) => {
-                userAnswers.push(formData.get(`question${index}`));
+                questionContainer.appendChild(questionDiv);
             });
 
-            // Initialize scores
-            const results = {
-                Science: 0,
-                Commerce: 0,
-                Arts: 0
-            };
+            // Form submission
+            document.getElementById('aptitude-form').addEventListener('submit', async function (event) {
+                event.preventDefault();
+                const formData = new FormData(event.target);
+                const userAnswers = [];
+
+                questions.forEach((q, index) => {
+                    userAnswers.push(formData.get(`question${index}`));
+                });
+
+                // Initialize scores
+                const results = {
+                    Science: 0,
+                    Commerce: 0,
+                    Arts: 0
+                };
 
                 questions.forEach((q, index) => {
                     if (userAnswers[index] === q.answer) {
@@ -367,30 +378,27 @@
                         }
                     }
                 });
-            // Evaluate answers
-            userAnswers.forEach((answer, index) => {
-                if (answer === questions[index].answer) {
-                    // Update the score based on the question's category
-                    if (questions[index].category === "Numerical Reasoning" || 
-                        questions[index].category === "Science" || 
-                        questions[index].category === "Mechanical Reasoning") {
-                        results.Science++;
-                    } else if (questions[index].category === "Logical Reasoning" || 
-                               questions[index].category === "Verbal Reasoning" || 
-                               questions[index].category === "Mathematics") {
-                        results.Commerce++;
-                    } else if (questions[index].category === "Arts" || 
-                               questions[index].category === "Abstract Reasoning") {
-                        results.Arts++;
+                // Evaluate answers
+                userAnswers.forEach((answer, index) => {
+                    if (answer === questions[index].answer) {
+                        // Update the score based on the question's category
+                        if (questions[index].category === "Numerical Reasoning" ||
+                            questions[index].category === "Science" ||
+                            questions[index].category === "Mechanical Reasoning") {
+                            results.Science++;
+                        } else if (questions[index].category === "Logical Reasoning" ||
+                            questions[index].category === "Verbal Reasoning" ||
+                            questions[index].category === "Mathematics") {
+                            results.Commerce++;
+                        } else if (questions[index].category === "Arts" ||
+                            questions[index].category === "Abstract Reasoning") {
+                            results.Arts++;
+                        }
                     }
-                }
-            });
-
-                let bestStream = "Arts";
+                });
+                // Determine the best stream
+                let bestStream = "Arts"; // Default
                 let maxScore = results.Arts;
-            // Determine the best stream
-            let bestStream = "Arts"; // Default
-            let maxScore = results.Arts;
 
                 for (const [stream, score] of Object.entries(results)) {
                     if (score > maxScore) {
@@ -398,12 +406,12 @@
                         maxScore = score;
                     }
                 }
-            for (const stream in results) {
-                if (results[stream] > maxScore) {
-                    bestStream = stream;
-                    maxScore = results[stream];
+                for (const stream in results) {
+                    if (results[stream] > maxScore) {
+                        bestStream = stream;
+                        maxScore = results[stream];
+                    }
                 }
-            }
 
                 const resultDiv = document.getElementById('result');
                 resultDiv.innerHTML = `Based on your answers, you are best suited for the <strong>${bestStream}</strong> stream. For more accurate results, please visit a counselor of your preference.`;
@@ -419,4 +427,5 @@
         });
     </script>
 </body>
+
 </html>
