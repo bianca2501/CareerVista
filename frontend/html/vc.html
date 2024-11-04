@@ -9,32 +9,33 @@
   <body>
     <div class="video-call-container">
       <div class="video-section">
-        <div class="video-wrapper" id="local-video">
-          <video autoplay muted></video>
+        <div class="video-wrapper">
+          <video muted id="local-video" autoplay></video>
           <p>You</p>
         </div>
-        <div class="video-wrapper" id="remote-video">
-          <video autoplay></video>
+        <div class="video-wrapper">
+          <video id="remote-video" autoplay></video>
           <p>Counsellor</p>
         </div>
       </div>
 
       <div class="controls">
-        <button id="mute-button">Mute</button>
-        <button id="camera-button">Turn Off Camera</button>
-        <button id="end-call-button" class="end-call">End Call</button>
+        <button onclick="muteAudio()" id="mute-button">Mute</button>
+        <button onclick="muteVideo()" id="camera-button">
+          Turn Off Camera
+        </button>
       </div>
 
       <div class="chat-section">
         <div class="chat-header">
-          <h2>Chat</h2>
+          <h2>Enter Room ID:</h2>
         </div>
         <div class="chat-messages" id="chat-messages">
           <!-- Chat messages will appear here -->
         </div>
         <div class="chat-input">
-          <input type="text" id="chat-input" placeholder="Type a message..." />
-          <button id="send-button">Send</button>
+          <input type="text" id="username-input" placeholder="Room ID" />
+          <button onclick="joinCall()" id="send-button">Join</button>
         </div>
       </div>
     </div>

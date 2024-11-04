@@ -1,127 +1,113 @@
-const localVideo = document.querySelector('#local-video video');
-const remoteVideo = document.querySelector('#remote-video video');
+const webSocket = new WebSocket("ws://127.0.0.1:8000");
+
+webSocket.onmessage = (event) => {
+  handleSignallingData(JSON.parse(event.data));
+};
+
+function handleSignallingData(data) {
+  switch (data.type) {
+    case "answer":
+      peerConn.setRemoteDescription(data.answer);
+      break;
+    case "candidate":
+      peerConn.addIceCandidate(data.candidate);
+  }
+}
+
+let username;
+function sendUsername() {
+  username = document.getElementById("username-input").value;
+  sendData({
+    type: "store_user",
+  });
+}
+
+function sendData(data) {
+  data.username = username;
+  webSocket.send(JSON.stringify(data));
+}
+
 let localStream;
-let peerConnection;
-const signalingServerUrl = 'ws://localhost:3000'; // Change to your signaling server URL
-const signalingSocket = new WebSocket(signalingServerUrl);
-const studentId = 'student_id'; // Replace with actual student ID
-const counselorId = 'counselor_id'; // Replace with actual student ID
+let peerConn;
+function startCall() {
+  sendUsername();
 
-signalingSocket.onopen = () => {
-    signalingSocket.send(JSON.stringify({ type: 'register', id: counselorId })); // Register counselor
-};
+  navigator.getUserMedia(
+    {
+      video: {
+        frameRate: 24,
+        width: {
+          min: 480,
+          ideal: 720,
+          max: 1280,
+        },
+        aspectRatio: 1.33333,
+      },
+      audio: true,
+    },
+    (stream) => {
+      localStream = stream;
+      document.getElementById("local-video").srcObject = localStream;
 
-signalingSocket.onmessage = async (message) => {
-    const data = JSON.parse(message.data);
-    
-    if (data.type === 'signal') {
-        handleSignal(data.signal, data.fromId);
-    } else if (data.type === 'chat') {
-        const chatMessages = document.getElementById('chat-messages');
-        const messageElement = document.createElement('p');
-        messageElement.textContent = `${data.fromId}: ${data.message}`; // Indicate sender
-        chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+      let configuration = {
+        iceServers: [
+          {
+            urls: [
+              "stun:stun.l.google.com:19302",
+              "stun:stun1.l.google.com:19302",
+              "stun:stun2.l.google.com:19302",
+            ],
+          },
+        ],
+      };
+
+      peerConn = new RTCPeerConnection(configuration);
+      peerConn.addStream(localStream);
+
+      peerConn.onaddstream = (e) => {
+        document.getElementById("remote-video").srcObject = e.stream;
+      };
+
+      peerConn.onicecandidate = (e) => {
+        if (e.candidate == null) return;
+        sendData({
+          type: "store_candidate",
+          candidate: e.candidate,
+        });
+      };
+
+      createAndSendOffer();
+    },
+    (error) => {
+      console.log(error);
     }
-};
-
-async function startLocalVideo() {
-    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-    localVideo.srcObject = localStream;
-    localVideo.play();
-
-    peerConnection = new RTCPeerConnection();
-
-    localStream.getTracks().forEach(track => {
-        peerConnection.addTrack(track, localStream);
-    });
-
-    peerConnection.ontrack = (event) => {
-        remoteVideo.srcObject = event.streams[0];
-    };
-
-    peerConnection.onicecandidate = (event) => {
-        if (event.candidate) {
-            signalingSocket.send(JSON.stringify({
-                type: 'signal',
-                targetId: studentId, // Send to student
-                fromId: counselorId,
-                signal: { ice: event.candidate }
-            }));
-        }
-    };
-
-    const offer = await peerConnection.createOffer();
-    await peerConnection.setLocalDescription(offer);
-    signalingSocket.send(JSON.stringify({
-        type: 'signal',
-        targetId: studentId, // Send to student
-        fromId: counselorId,
-        signal: { sdp: offer }
-    }));
+  );
 }
 
-async function handleSignal(signal, fromId) {
-    if (signal.sdp) {
-        await peerConnection.setRemoteDescription(new RTCSessionDescription(signal.sdp));
-        if (signal.sdp.type === 'offer') {
-            const answer = await peerConnection.createAnswer();
-            await peerConnection.setLocalDescription(answer);
-            signalingSocket.send(JSON.stringify({
-                type: 'signal',
-                targetId: fromId,
-                fromId: counselorId,
-                signal: { sdp: answer }
-            }));
-        }
-    } else if (signal.ice) {
-        await peerConnection.addIceCandidate(new RTCIceCandidate(signal.ice));
+function createAndSendOffer() {
+  peerConn.createOffer(
+    (offer) => {
+      sendData({
+        type: "store_offer",
+        offer: offer,
+      });
+
+      peerConn.setLocalDescription(offer);
+    },
+    (error) => {
+      console.log(error);
     }
+  );
 }
 
-// Mute and camera toggle functionality
-document.getElementById('mute-button').addEventListener('click', function() {
-    localStream.getAudioTracks().forEach(track => {
-        track.enabled = !track.enabled; // Mute/unmute
-        this.textContent = track.enabled ? 'Mute' : 'Unmute';
-    });
-});
+let isAudio = true;
+function muteAudio() {
+  isAudio = !isAudio;
+  localStream.getAudioTracks()[0].enabled = isAudio;
+}
 
-document.getElementById('camera-button').addEventListener('click', function() {
-    localStream.getVideoTracks().forEach(track => {
-        track.enabled = !track.enabled; // Turn off/on camera
-        this.textContent = track.enabled ? 'Turn Off Camera' : 'Turn On Camera';
-    });
-});
-
-// End call functionality
-document.getElementById('end-call-button').addEventListener('click', function() {
-    localStream.getTracks().forEach(track => track.stop()); // Stop all tracks
-    if (peerConnection) {
-        peerConnection.close();
-        peerConnection = null;
-    }
-});
-
-// Chat functionality
-document.getElementById('send-button').addEventListener('click', function() {
-    const message = document.getElementById('chat-input').value;
-    if (message) {
-        const chatMessages = document.getElementById('chat-messages');
-        const messageElement = document.createElement('p');
-        messageElement.textContent = `You: ${message}`; // Indicate the sender
-        chatMessages.appendChild(messageElement);
-        document.getElementById('chat-input').value = '';
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-
-        // Send the message via WebSocket to the student
-        signalingSocket.send(JSON.stringify({
-            type: 'chat',
-            message: message,
-            targetId: studentId, // Send to the student's ID
-            fromId: counselorId // Your ID
-        }));
-    }    
-});
-
-window.addEventListener('load', startLocalVideo);
+let isVideo = true;
+function muteVideo() {
+  isVideo = !isVideo;
+  localStream.getVideoTracks()[0].enabled = isVideo;
+}
