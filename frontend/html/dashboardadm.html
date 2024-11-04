@@ -77,7 +77,11 @@
             color: white;
         }
 
-        .add-video-form input[type="text"], .add-video-form textarea {
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .add-user-form input[type="text"], .add-user-form textarea {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -85,7 +89,7 @@
             border-radius: 4px;
         }
 
-        .add-video-form input[type="submit"] {
+        .add-user-form input[type="submit"] {
             background-color: #2C3E50;
             color: white;
             border: none;
@@ -94,7 +98,7 @@
             border-radius: 4px;
         }
 
-        .add-video-form input[type="submit"]:hover {
+        .add-user-form input[type="submit"]:hover {
             background-color: #1A242F;
         }
 
@@ -107,6 +111,25 @@
             flex: 1;
             margin: 0 10px;
         }
+
+        .message {
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button {
+            background-color: #3498DB;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980B9;
+        }
     </style>
 </head>
 <body>
@@ -117,7 +140,7 @@
             <li><a href="#overview">Overview</a></li>
             <li><a href="#counselors">View Counselors</a></li>
             <li><a href="#students">View Students</a></li>
-            <li><a href="#videos">Add Motivational Videos</a></li>
+            <li><a href="#register">Register User</a></li>
             <li><a href="#feedback">View Feedback</a></li>
         </ul>
     </div>
@@ -130,19 +153,11 @@
             <div class="overview">
                 <div class="card">
                     <h4>Total Counselors</h4>
-                    <p>25</p>
+                    <p id="totalCounselors">0</p>
                 </div>
                 <div class="card">
                     <h4>Total Students</h4>
-                    <p>200</p>
-                </div>
-                <div class="card">
-                    <h4>Total Videos</h4>
-                    <p>15</p>
-                </div>
-                <div class="card">
-                    <h4>Total Feedbacks</h4>
-                    <p>50</p>
+                    <p id="totalStudents">0</p>
                 </div>
             </div>
         </div>
@@ -159,14 +174,8 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>John Doe</td>
-                        <td>Masters in Psychology</td>
-                        <td>5 years</td>
-                        <td><button>Edit</button> <button>Deactivate</button></td>
-                    </tr>
-                    <!-- Add more counselors here -->
+                <tbody id="counselorTableBody">
+                    <!-- Counselors will be populated here -->
                 </tbody>
             </table>
         </div>
@@ -183,26 +192,31 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Jane Smith</td>
-                        <td>12th</td>
-                        <td>Engineering</td>
-                        <td><button>Edit</button> <button>Remove</button></td>
-                    </tr>
-                    <!-- Add more students here -->
+                <tbody id="studentTableBody">
+                    <!-- Students will be populated here -->
                 </tbody>
             </table>
         </div>
 
-        <!-- Add Motivational Videos Section -->
-        <div id="videos" class="card">
-            <h3>Add Motivational Videos</h3>
-            <form class="add-video-form">
-                <input type="text" placeholder="Video Title">
-                <textarea placeholder="Video Description"></textarea>
-                <input type="file" accept="video/*">
-                <input type="submit" value="Upload Video">
+        <!-- Register User Section -->
+        <div id="register" class="card">
+            <h3>Register User</h3>
+            <h4>Register Counselor</h4>
+            <form class="add-user-form" id="counselorForm">
+                <input type="text" id="counselorName" placeholder="Counselor Name" required>
+                <input type="text" id="counselorQualification" placeholder="Qualification" required>
+                <input type="text" id="counselorExperience" placeholder="Experience" required>
+                <input type="submit" value="Register Counselor">
+                <p class="message" id="counselorMessage"></p>
+            </form>
+
+            <h4>Register Student</h4>
+            <form class="add-user-form" id="studentForm">
+                <input type="text" id="studentName" placeholder="Student Name" required>
+                <input type="text" id="studentGrade" placeholder="Grade" required>
+                <input type="text" id="studentCareerInterest" placeholder="Career Interest" required>
+                <input type="submit" value="Register Student">
+                <p class="message" id="studentMessage"></p>
             </form>
         </div>
 
@@ -231,6 +245,102 @@
         </div>
 
     </div>
+
+    <script>
+        // Function to load and display counselors and students from local storage
+        function loadUsers() {
+            const counselors = JSON.parse(localStorage.getItem('counselors')) || [];
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+
+            const counselorTableBody = document.getElementById('counselorTableBody');
+            const studentTableBody = document.getElementById('studentTableBody');
+
+            // Clear current table bodies
+            counselorTableBody.innerHTML = '';
+            studentTableBody.innerHTML = '';
+
+            // Populate counselors table
+            counselors.forEach((counselor, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${counselor.name}</td>
+                    <td>${counselor.qualification}</td>
+                    <td>${counselor.experience}</td>
+                    <td>
+                        <button onclick="editCounselor(${index})">Edit</button>
+                        <button onclick="deleteCounselor(${index})">Deactivate</button>
+                    </td>
+                `;
+                counselorTableBody.appendChild(row);
+            });
+
+            // Populate students table
+            students.forEach((student, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.name}</td>
+                    <td>${student.grade}</td>
+                    <td>${student.careerInterest}</td>
+                    <td>
+                        <button onclick="editStudent(${index})">Edit</button>
+                        <button onclick="deleteStudent(${index})">Remove</button>
+                    </td>
+                `;
+                studentTableBody.appendChild(row);
+            });
+
+            // Update total counts
+            document.getElementById('totalCounselors').textContent = counselors.length;
+            document.getElementById('totalStudents').textContent = students.length;
+        }
+
+        // Function to register a new counselor
+        document.getElementById('counselorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('counselorName').value;
+            const qualification = document.getElementById('counselorQualification').value;
+            const experience = document.getElementById('counselorExperience').value;
+
+            const counselors = JSON.parse(localStorage.getItem('counselors')) || [];
+            counselors.push({ name, qualification, experience });
+            localStorage.setItem('counselors', JSON.stringify(counselors));
+            document.getElementById('counselorMessage').textContent = 'Counselor registered successfully!';
+            loadUsers();
+        });
+
+        // Function to register a new student
+        document.getElementById('studentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('studentName').value;
+            const grade = document.getElementById('studentGrade').value;
+            const careerInterest = document.getElementById('studentCareerInterest').value;
+
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            students.push({ name, grade, careerInterest });
+            localStorage.setItem('students', JSON.stringify(students));
+            document.getElementById('studentMessage').textContent = 'Student registered successfully!';
+            loadUsers();
+        });
+
+        // Function to delete a counselor
+        function deleteCounselor(index) {
+            const counselors = JSON.parse(localStorage.getItem('counselors')) || [];
+            counselors.splice(index, 1);
+            localStorage.setItem('counselors', JSON.stringify(counselors));
+            loadUsers();
+        }
+
+        // Function to delete a student
+        function deleteStudent(index) {
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            students.splice(index, 1);
+            localStorage.setItem('students', JSON.stringify(students));
+            loadUsers();
+        }
+
+        // Load users on page load
+        window.onload = loadUsers;
+    </script>
 
 </body>
 </html>

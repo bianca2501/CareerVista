@@ -187,6 +187,8 @@
                     return;
                 }
 
+                const data = await res.json();
+                localStorage.setItem('userID', data.userID); // Store user ID in local storage
                 alert("Login successful!");
                 window.location.href = "dashboardcoun.html";
             } catch (error) {
@@ -233,6 +235,8 @@
                     return;
                 }
 
+                const data = await res.json();
+                localStorage.setItem('userID', data.userID); // Store user ID in local storage
                 alert("Registration successful!");
                 window.location.href = "dashboardcoun.html";
             } catch (error) {
