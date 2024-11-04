@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login | CareerVista</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #264a6c;
+        font-family: Arial, sans-serif;
+      }
+
+      .wrapper {
+        width: 100%;
+        max-width: 400px; /* Ensures the container doesn’t get too wide */
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 30px; /* Adjusted for better alignment */
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(15px);
+        color: #fff;
+        text-align: center;
+      }
+
+      .wrapper h1 {
+        font-size: 24px;
+        margin-bottom: 30px;
+        color: #fff;
+        letter-spacing: 1px;
+      }
+
+      .input-box {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      .input-box input {
+        width: 100%;
+        padding: 12px 15px 12px 45px; /* Ensures the input boxes are well within the container */
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 30px;
+        font-size: 16px;
+        color: #fff;
+        outline: none;
+        box-sizing: border-box; /* Ensures padding and width fit the container */
+      }
+
+      .input-box input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .input-box i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #fff;
+        color: #264a6c;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
+      }
+
+      .btn:hover {
+        background-color: #f0f0f0;
+      }
+
+      .error {
+        color: #ff4d4d;
+        margin-top: 15px;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <form id="loginForm">
+        <h1>Admin Login</h1>
+        <div class="input-box">
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Username"
+            required
+          />
+          <i class="bx bxs-user"></i>
+        </div>
+        <div class="input-box">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+        <button type="submit" class="btn">Login</button>
+        <div class="error" id="errorMsg"></div>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent form submission
+
+          // Get input values
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          // Define valid credentials
+          const validUsernames = ["Mokshada234", "Bianca456", "Lincia678"];
+          const validPassword = "gotodashboard2345678";
+
+          // Check if username and password match
+          if (validUsernames.includes(username) && password === validPassword) {
+            // Redirect to dashboard if credentials are valid
+            window.location.href = "dashboardadm.html";
+          } else {
+            // Display error message
+            document.getElementById("errorMsg").textContent =
+              "Invalid username or password!";
+          }
+        });
+    </script>
+  </body>
+</html>

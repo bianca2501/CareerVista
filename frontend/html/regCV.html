@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register | CareerVista</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <form onsubmit="registerForm(event)">
+        <h1>Register</h1>
+        <div class="input-box">
+          <input id="name" type="text" placeholder="Full Name" required />
+          <i class="bx bxs-user"></i>
+        </div>
+
+        <div class="input-box">
+          <input id="email" type="email" placeholder="Email" required />
+          <i class="bx bxs-envelope"></i>
+        </div>
+
+        <div class="input-box">
+          <input id="username" type="text" placeholder="Username" required />
+          <i class="bx bxs-user"></i>
+        </div>
+
+        <div class="input-box">
+          <input
+            id="password"
+            type="password"
+            placeholder="Password"
+            required
+          />
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+
+        <div class="input-box">
+          <input
+            id="confirm-password"
+            type="password"
+            placeholder="Confirm Password"
+            required
+          />
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+
+        <button type="submit" class="btn">Register</button>
+
+        <div class="register-link">
+          <p>Already have an account?<a href="loginCV.html">Login</a></p>
+        </div>
+      </form>
+    </div>
+    <script>
+      const registerForm = async (e) => {
+        e.preventDefault();
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword =
+          document.getElementById("confirm-password").value;
+
+        if (password !== confirmPassword) {
+          alert("Passwords do not match!");
+          return;
+        }
+
+        try {
+          const res = await register({
+            name,
+            email,
+            username,
+            password,
+          });
+
+          if (res.ok) {
+            alert("Registration successful!");
+            window.location.href = "loginCV.html";
+          } else {
+            const errorData = await res.json();
+            alert(
+              errorData.message || "An error occurred during registration."
+            );
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("An unexpected error occurred.");
+        }
+      };
+
+      const register = async (data) => {
+        try {
+          const response = await fetch("http://localhost:4000/user/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+          return response;
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    </script>
+  </body>
+</html>

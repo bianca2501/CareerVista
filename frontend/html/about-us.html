@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us | CareerVista</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        color: #333;
+        line-height: 1.6;
+        background-color: #f9f9f9;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* Hero Section */
+      .hero {
+        background-image: url("../images/your-image.jpg");
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        position: relative;
+      }
+
+      .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 4rem;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+      }
+
+      .hero p {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+
+      .hero a {
+        padding: 10px 30px;
+        background-color: #fff;
+        color: #333;
+        border-radius: 30px;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+        transition: background 0.3s ease;
+      }
+
+      .hero a:hover {
+        background-color: #264a6c;
+        color: white;
+      }
+
+      /* Section Styles */
+      section {
+        padding: 60px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #264a6c;
+        font-weight: 600;
+      }
+
+      section p {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        color: #555;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Image Styling */
+      .section-img {
+        margin: 30px 0;
+        width: 100%;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Contact Section */
+      .contact-info {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+      }
+
+      .contact-info div {
+        margin-bottom: 20px;
+      }
+
+      /* Footer */
+      footer {
+        background-color: #333;
+        color: white;
+        padding: 30px 0;
+        text-align: center;
+      }
+
+      footer p {
+        margin: 0;
+        font-size: 1.1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Hero Section -->
+    <div class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>About Us</h1>
+        <p>Where Dreams Meet Direction</p>
+        <a href="#vision">Learn More</a>
+      </div>
+    </div>
+
+    <!-- Vision Section -->
+    <section id="vision">
+      <h2>Vision Statement</h2>
+      <p>
+        "To empower every student to discover their true potential and navigate
+        their career path with confidence, clarity, and support, leading to a
+        fulfilling and successful future."
+      </p>
+      <div class="section-img">
+        <img src="../images/vision.jpg" alt="Vision" />
+      </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section id="mission">
+      <h2>Mission Statement</h2>
+      <p>
+        "To provide comprehensive and personalized career counseling services
+        that guide students through critical educational milestones. By offering
+        aptitude tests, expert counseling sessions, mental health support, and
+        motivational resources, we aim to help students make informed decisions
+        about their academic and career paths."
+      </p>
+    </section>
+
+    <!-- Our Story Section -->
+    <section id="story">
+      <h2>Our Story</h2>
+      <p>
+        Career Vista was founded by three third-year Engineering students and
+        counselors who saw a need for personalized career guidance. We are
+        dedicated to helping students discover their potential and make
+        confident career choices.
+      </p>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <div class="contact-info">
+        <div><strong>Email:</strong> info@careervista.com</div>
+        <div><strong>Phone:</strong> +123-456-7890</div>
+        <div>
+          <strong>Address:</strong> 123 Career Pathway, DreamCity, DC 12345
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2024 CareerVista | All rights reserved</p>
+    </footer>
+  </body>
+</html>

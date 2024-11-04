@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select User Type | CareerVista</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #264a6c;
+        font-family: Arial, sans-serif;
+      }
+
+      .wrapper {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 40px;
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        max-width: 600px;
+        width: 100%;
+      }
+
+      .wrapper h1 {
+        font-size: 28px;
+        margin-bottom: 30px;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+      }
+
+      .image-container div {
+        text-align: center;
+        flex: 1;
+      }
+
+      .image-container img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 10px;
+      }
+
+      .image-container button {
+        width: 150px;
+        padding: 12px;
+        background-color: #fff;
+        color: #264a6c;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease;
+      }
+
+      .image-container button:hover {
+        background-color: #ddd;
+      }
+
+      p {
+        color: #fff;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>Select User Type</h1>
+      <div class="image-container">
+        <div>
+          <img src="../images/stu.jpg" alt="Student" />
+          <p>Student</p>
+          <button id="studentBtn">Login as Student</button>
+        </div>
+        <div>
+          <img src="../images/cou.jpg" alt="Counselor" />
+          <p>Counselor</p>
+          <button id="counselorBtn">Login as Counselor</button>
+        </div>
+        <div>
+          <img src="../images/adm.jpg" alt="Admin" />
+          <p>Admin</p>
+          <button id="adminBtn">Login as Administrator</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Redirect to appropriate pages when buttons are clicked
+      document
+        .getElementById("studentBtn")
+        .addEventListener("click", function () {
+          window.location.href = "loginCV.html";
+        });
+
+      document
+        .getElementById("counselorBtn")
+        .addEventListener("click", function () {
+          window.location.href = "counsellor-login-up.html";
+        });
+
+      document
+        .getElementById("adminBtn")
+        .addEventListener("click", function () {
+          window.location.href = "adminlogin.html";
+        });
+    </script>
+  </body>
+</html>

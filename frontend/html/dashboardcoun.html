@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | CareerVista Counselor</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+      }
+
+      .dashboard-wrapper {
+        display: flex;
+        height: 100vh;
+      }
+
+      .sidebar {
+        width: 250px;
+        background-color: #264a6c;
+        color: white;
+        padding: 20px;
+      }
+
+      .sidebar h2 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .sidebar ul li {
+        margin-bottom: 20px;
+      }
+
+      .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.2em;
+        display: flex;
+        align-items: center;
+      }
+
+      .sidebar ul li a i {
+        margin-right: 10px;
+      }
+
+      .main-content {
+        flex-grow: 1;
+        padding: 40px;
+      }
+
+      .section {
+        margin-bottom: 40px;
+      }
+
+      .section h3 {
+        border-bottom: 2px solid #264a6c;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        font-size: 1.8em;
+      }
+
+      .section p {
+        font-size: 1.1em;
+        line-height: 1.6;
+      }
+
+      /* Hide content sections by default */
+      .section {
+        display: none;
+      }
+
+      /* Show content section when active */
+      .section.active {
+        display: block;
+      }
+
+      /* Styles for the form */
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-field {
+        margin-bottom: 15px;
+      }
+
+      .form-field label {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .form-field input,
+      #feedback textarea,
+      #rating {
+        padding: 10px;
+        font-size: 1em;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        background-color: #264a6c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.2em;
+      }
+
+      .btn:hover {
+        background-color: #3a5a7c;
+      }
+
+      .counselor-list {
+        margin-top: 20px;
+      }
+
+      .counselor-item {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .counselor-details {
+        flex-grow: 1;
+      }
+
+      .counselor-name {
+        font-weight: bold;
+        font-size: 1.2em;
+      }
+
+      .view-reviews {
+        color: #264a6c;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .dashboard-wrapper {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-wrapper">
+      <div class="sidebar">
+        <h2>Counselor Dashboard</h2>
+        <ul>
+          <li>
+            <a href="#" onclick="showContent('profile')"
+              ><i class="bx bx-user"></i> My Profile</a
+            >
+          </li>
+          <li>
+            <a href="#" onclick="showContent('sessions')"
+              ><i class="bx bx-history"></i> Manage Sessions</a
+            >
+          </li>
+          <li>
+            <a href="#" onclick="showContent('feedback')"
+              ><i class="bx bx-cog"></i> Student Feedback</a
+            >
+          </li>
+          <li>
+            <a href="#" onclick="showContent('resources')"
+              ><i class="bx bx-library"></i> Resources</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div class="main-content">
+        <!-- Default Image Gallery -->
+        <div id="image-gallery" class="image-gallery">
+          <img
+            id="slideshow-image"
+            src="../images/1.jpg"
+            alt="Slideshow Image"
+          />
+        </div>
+
+        <!-- Sections for the content -->
+        <div class="section" id="profile">
+          <h3>My Profile</h3>
+          <p>
+            Details about the counselor's profile, qualifications, and
+            specialties.
+          </p>
+        </div>
+
+        <div class="section" id="sessions">
+          <h3>Manage Sessions</h3>
+          <p>Overview of upcoming sessions and counseling history.</p>
+          <h4>Upcoming Sessions</h4>
+          <div class="counselor-list">
+            <div class="counselor-item">
+              <div class="counselor-details">
+                <div class="counselor-name">John Doe</div>
+                <div>
+                  Session Date: 10/11/2024
+                  <br />
+                  Payment Status: Pending
+                </div>
+                <span class="view-reviews" onclick="showReviews('John Doe')"
+                  >View Reviews</span
+                >
+              </div>
+              <button class="btn" onclick="viewSessionDetails('John Doe')">
+                View Details
+              </button>
+            </div>
+            <div class="counselor-item">
+              <div class="counselor-details">
+                <div class="counselor-name">Jane Smith</div>
+                <div>
+                  Session Date: 11/11/2024
+                  <br />
+                  Payment Status: Completed
+                </div>
+                <span class="view-reviews" onclick="showReviews('Jane Smith')"
+                  >View Reviews</span
+                >
+              </div>
+              <button class="btn" onclick="viewSessionDetails('Jane Smith')">
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" id="resources">
+          <h3>Resources</h3>
+          <p>
+            Access materials and tools to assist students in their career
+            planning.
+          </p>
+          <ul style="list-style-type: none; padding: 0; margin: 0">
+            <li style="margin-bottom: 15px">
+              <a
+                href="../aptitude_test_guide.pdf"
+                class="btn"
+                style="width: 100%; text-align: center"
+                >Aptitude Test Guide</a
+              >
+            </li>
+            <li style="margin-bottom: 15px">
+              <a
+                href="career-paths.html"
+                class="btn"
+                style="width: 100%; text-align: center"
+                >Career Paths Information</a
+              >
+            </li>
+            <li style="margin-bottom: 15px">
+              <a
+                href="counseling-techniques.html"
+                class="btn"
+                style="width: 100%; text-align: center"
+                >Effective Counseling Techniques</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="section" id="feedback">
+          <h3>Student Feedback</h3>
+          <p>Your feedback helps improve the counseling process.</p>
+          <form>
+            <label for="feedback-message">Your Feedback Message:</label>
+            <textarea
+              id="feedback-message"
+              name="feedback-message"
+              rows="5"
+              required
+            ></textarea>
+
+            <label for="rating">Rate Your Counseling Experience:</label>
+            <select id="rating" name="rating" required>
+              <option value="">Select a rating</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+
+            <button type="submit">Submit Feedback</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var images = [
+        "../images/.jpg",
+        "../images/.jpg",
+        "../images/.jpg",
+        "../images/.jpg",
+        "../images/.jpg",
+        "../images/.jpg",
+        "../images/.jpg",
+        "../images/.jpg",
+        "../images/.jpg",
+        "../images/0.jpg",
+      ];
+
+      var currentIndex = 0;
+
+      function showContent(sectionId) {
+        // Hide the image gallery
+        document.getElementById("image-gallery").style.display = "none";
+
+        // Hide all sections
+        var sections = document.querySelectorAll(".section");
+        sections.forEach(function (section) {
+          section.classList.remove("active");
+        });
+
+        // Show the selected section
+        var selectedSection = document.getElementById(sectionId);
+        if (selectedSection) {
+          selectedSection.classList.add("active");
+        }
+      }
+
+      function changeImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        document.getElementById("slideshow-image").src = images[currentIndex];
+      }
+
+      // Change the image every 5 minutes (300000 milliseconds)
+      setInterval(changeImage, 300000);
+
+      // Show default content
+      showContent("profile");
+    </script>
+  </body>
+</html>

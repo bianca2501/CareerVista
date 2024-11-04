@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Call | CareerVista</title>
+    <link rel="stylesheet" href="../css/vc.css" />
+  </head>
+  <body>
+    <div class="video-call-container">
+      <div class="video-section">
+        <div class="video-wrapper" id="local-video">
+          <video autoplay muted></video>
+          <p>You</p>
+        </div>
+        <div class="video-wrapper" id="remote-video">
+          <video autoplay></video>
+          <p>Counsellor</p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="mute-button">Mute</button>
+        <button id="camera-button">Turn Off Camera</button>
+        <button id="end-call-button" class="end-call">End Call</button>
+      </div>
+
+      <div class="chat-section">
+        <div class="chat-header">
+          <h2>Chat</h2>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <!-- Chat messages will appear here -->
+        </div>
+        <div class="chat-input">
+          <input type="text" id="chat-input" placeholder="Type a message..." />
+          <button id="send-button">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/vc.js"></script>
+  </body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aptitude Test | CareerVista</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .test-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        h2 {
+            color: #264a6c;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #264a6c;
+            color: white;
+            text-align: center;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #1e3a4d;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .result-message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #e0f7fa;
+            color: #00796b;
+            font-size: 1.2em;
+            text-align: center;
+            display: none;
+        }
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-wrapper">
+        <div class="back-button">
+            <button type="button" class="btn" onclick="window.location.href='dashboard.html';">Back to Dashboard</button>
+        </div>
+        <form id="aptitude-form">
+            <div id="question-container"></div>
+            <button type="submit" class="btn">Submit Answers</button>
+        </form>
+        <div id="result" class="result-message"></div>
+    </div>
+    <script>
+        const questions = [
+            {
+                question: "Which word is most opposite in meaning to 'Ephemeral'?",
+                options: ["Transient", "Permanent", "Momentary", "Fleeting"],
+                category: "Verbal Reasoning",
+                answer: "Permanent"
+            },
+            {
+                question: "If the sum of three consecutive even numbers is 180, what is the smallest number?",
+                options: ["56", "58", "60", "62"],
+                category: "Numerical Reasoning",
+                answer: "58"
+            },
+            {
+                question: "What is the synonym for 'Gregarious'?",
+                options: ["Solitary", "Sociable", "Shy", "Timid"],
+                category: "Verbal Reasoning",
+                answer: "Sociable"
+            },
+            {
+                question: "What is the next number in the series: 2, 5, 10, 17, ?",
+                options: ["24", "26", "28", "30"],
+                category: "Numerical Reasoning",
+                answer: "26"
+            },
+            {
+                question: "A man spends 30% of his income on rent, 20% on food, and 10% on entertainment. If he saves the remaining $1,400, what is his total income?",
+                options: ["$4,000", "$5,000", "$6,000", "$7,000"],
+                category: "Numerical Reasoning",
+                answer: "$5,000"
+            },
+            {
+                question: "Which figure comes next in the sequence: △, ◯, □, △, ◯, ___?",
+                options: ["△", "◯", "□", "◾"],
+                category: "Abstract Reasoning",
+                answer: "□"
+            },
+            {
+                question: "In a pulley system, if the effort applied is 100 N and the load lifted is 300 N, what is the mechanical advantage?",
+                options: ["3", "4", "5", "6"],
+                category: "Mechanical Reasoning",
+                answer: "3"
+            },
+            {
+                question: "Which of the following is a metal?",
+                options: ["Oxygen", "Hydrogen", "Iron", "Carbon"],
+                category: "Science",
+                answer: "Iron"
+            },
+            {
+                question: "What is the chemical formula of water?",
+                options: ["H2O", "O2", "CO2", "H2SO4"],
+                category: "Science",
+                answer: "H2O"
+            },
+            {
+                question: "What is the capital city of France?",
+                options: ["Berlin", "London", "Paris", "Rome"],
+                category: "General Knowledge",
+                answer: "Paris"
+            },
+            {
+                question: "Which planet is closest to the sun?",
+                options: ["Earth", "Mars", "Mercury", "Venus"],
+                category: "Science",
+                answer: "Mercury"
+            },
+            {
+                question: "Which gas do plants absorb from the atmosphere during photosynthesis?",
+                options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+                category: "Science",
+                answer: "Carbon Dioxide"
+            },
+            {
+                question: "Which continent is the Sahara Desert located in?",
+                options: ["Africa", "Asia", "Europe", "Australia"],
+                category: "General Knowledge",
+                answer: "Africa"
+            },
+            {
+                question: "What is the result of 6 × 9?",
+                options: ["54", "64", "72", "84"],
+                category: "Numerical Reasoning",
+                answer: "54"
+            },
+            {
+                question: "Which animal is known as the king of the jungle?",
+                options: ["Lion", "Tiger", "Elephant", "Giraffe"],
+                category: "General Knowledge",
+                answer: "Lion"
+            },
+            {
+                question: "Solve for x: 5x + 3 = 23",
+                options: ["2", "3", "4", "5"],
+                category: "Numerical Reasoning",
+                answer: "4"
+            },
+            {
+                question: "What is the boiling point of water at sea level?",
+                options: ["90°C", "100°C", "110°C", "120°C"],
+                category: "Science",
+                answer: "100°C"
+            },
+            {
+                question: "Which of the following is a prime number?",
+                options: ["4", "6", "9", "11"],
+                category: "Mathematics",
+                answer: "11"
+            },
+            {
+                question: "Who wrote the play 'Romeo and Juliet'?",
+                options: ["Charles Dickens", "Mark Twain", "William Shakespeare", "George Orwell"],
+                category: "Arts",
+                answer: "William Shakespeare"
+            },
+            {
+                question: "In music, what is the symbol for sharp?",
+                options: ["#", "b", "!", "&"],
+                category: "Arts",
+                answer: "#"
+            },
+            {
+                question: "Which figure is a triangle?",
+                options: ["△", "◯", "□", "◾"],
+                category: "Abstract Reasoning",
+                answer: "△"
+            },
+            {
+                question: "What is the next letter in the sequence: A, C, E, G, ___?",
+                options: ["H", "I", "J", "K"],
+                category: "Logical Reasoning",
+                answer: "I"
+            },
+            {
+                question: "Which of the following is a renewable energy source?",
+                options: ["Coal", "Oil", "Wind", "Natural Gas"],
+                category: "Science",
+                answer: "Wind"
+            },
+            {
+                question: "What is the process of splitting an atom's nucleus called?",
+                options: ["Fusion", "Fission", "Combustion", "Evaporation"],
+                category: "Science",
+                answer: "Fission"
+            },
+            {
+                question: "What color is produced when blue and yellow are mixed?",
+                options: ["Green", "Purple", "Orange", "Brown"],
+                category: "Arts",
+                answer: "Green"
+            }
+        ];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function displayQuestions() {
+            shuffle(questions);
+            const questionContainer = document.getElementById('question-container');
+            questions.forEach((q, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+                q.options.forEach(option => {
+                    questionElement.innerHTML += `
+                        <label>
+                            <input type="radio" name="question${index}" value="${option}" required>
+                            ${option}
+                        </label><br>
+                    `;
+                });
+                questionContainer.appendChild(questionElement);
+            });
+        }
+
+        document.getElementById('aptitude-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            let score = 0;
+            let resultHtml = '';
+
+            questions.forEach((q, index) => {
+                const userAnswer = formData.get(`question${index}`);
+                if (userAnswer === q.answer) {
+                    score++;
+                }
+            });
+
+            resultHtml = `Your score: ${score} out of ${questions.length}.`;
+            const resultContainer = document.getElementById('result');
+            resultContainer.innerHTML = resultHtml;
+            resultContainer.style.display = 'block';
+        });
+
+        displayQuestions();
+    </script>
+</body>
+</html>
