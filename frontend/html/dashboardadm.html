@@ -77,7 +77,7 @@
             color: white;
         }
 
-        .add-user-form input[type="text"], .add-user-form textarea {
+        .add-video-form input[type="text"], .add-video-form textarea {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -85,7 +85,7 @@
             border-radius: 4px;
         }
 
-        .add-user-form input[type="submit"] {
+        .add-video-form input[type="submit"] {
             background-color: #2C3E50;
             color: white;
             border: none;
@@ -94,7 +94,7 @@
             border-radius: 4px;
         }
 
-        .add-user-form input[type="submit"]:hover {
+        .add-video-form input[type="submit"]:hover {
             background-color: #1A242F;
         }
 
@@ -117,6 +117,7 @@
             <li><a href="#overview">Overview</a></li>
             <li><a href="#counselors">View Counselors</a></li>
             <li><a href="#students">View Students</a></li>
+            <li><a href="#videos">Add Motivational Videos</a></li>
             <li><a href="#feedback">View Feedback</a></li>
         </ul>
     </div>
@@ -129,11 +130,19 @@
             <div class="overview">
                 <div class="card">
                     <h4>Total Counselors</h4>
-                    <p id="totalCounselors">0</p>
+                    <p>25</p>
                 </div>
                 <div class="card">
                     <h4>Total Students</h4>
-                    <p id="totalStudents">0</p>
+                    <p>200</p>
+                </div>
+                <div class="card">
+                    <h4>Total Videos</h4>
+                    <p>15</p>
+                </div>
+                <div class="card">
+                    <h4>Total Feedbacks</h4>
+                    <p>50</p>
                 </div>
             </div>
         </div>
@@ -150,8 +159,14 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="counselorTableBody">
-                    <!-- Counselors will be populated here -->
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>Masters in Psychology</td>
+                        <td>5 years</td>
+                        <td><button>Edit</button> <button>Deactivate</button></td>
+                    </tr>
+                    <!-- Add more counselors here -->
                 </tbody>
             </table>
         </div>
@@ -168,10 +183,27 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="studentTableBody">
-                    <!-- Students will be populated here -->
+                <tbody>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>12th</td>
+                        <td>Engineering</td>
+                        <td><button>Edit</button> <button>Remove</button></td>
+                    </tr>
+                    <!-- Add more students here -->
                 </tbody>
             </table>
+        </div>
+
+        <!-- Add Motivational Videos Section -->
+        <div id="videos" class="card">
+            <h3>Add Motivational Videos</h3>
+            <form class="add-video-form">
+                <input type="text" placeholder="Video Title">
+                <textarea placeholder="Video Description"></textarea>
+                <input type="file" accept="video/*">
+                <input type="submit" value="Upload Video">
+            </form>
         </div>
 
         <!-- View Feedback Section -->
@@ -199,73 +231,6 @@
         </div>
 
     </div>
-
-    <script>
-        // Function to load and display counselors and students from local storage
-        function loadUsers() {
-            const counselors = JSON.parse(localStorage.getItem('counselors')) || [];
-            const students = JSON.parse(localStorage.getItem('students')) || [];
-
-            const counselorTableBody = document.getElementById('counselorTableBody');
-            const studentTableBody = document.getElementById('studentTableBody');
-
-            // Clear current table bodies
-            counselorTableBody.innerHTML = '';
-            studentTableBody.innerHTML = '';
-
-            // Populate counselors table
-            counselors.forEach(counselor => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${counselor.name}</td>
-                    <td>${counselor.qualification}</td>
-                    <td>${counselor.experience}</td>
-                    <td><button onclick="editCounselor('${counselor.name}')">Edit</button> <button onclick="deactivateCounselor('${counselor.name}')">Deactivate</button></td>
-                `;
-                counselorTableBody.appendChild(row);
-            });
-
-            // Populate students table
-            students.forEach(student => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${student.name}</td>
-                    <td>${student.grade}</td>
-                    <td>${student.careerInterest}</td>
-                    <td><button onclick="editStudent('${student.name}')">Edit</button> <button onclick="removeStudent('${student.name}')">Remove</button></td>
-                `;
-                studentTableBody.appendChild(row);
-            });
-
-            // Update total counts
-            document.getElementById('totalCounselors').textContent = counselors.length;
-            document.getElementById('totalStudents').textContent = students.length;
-        }
-
-        // Edit Counselor (placeholder function)
-        function editCounselor(name) {
-            alert(`Edit counselor: ${name}`); // Implement edit functionality
-        }
-
-        // Deactivate Counselor (placeholder function)
-        function deactivateCounselor(name) {
-            alert(`Deactivate counselor: ${name}`); // Implement deactivate functionality
-        }
-
-        // Edit Student (placeholder function)
-        function editStudent(name) {
-            alert(`Edit student: ${name}`); // Implement edit functionality
-        }
-
-        // Remove Student (placeholder function)
-        function removeStudent(name) {
-            alert(`Remove student: ${name}`); // Implement remove functionality
-        }
-
-        // Load users on page load
-        window.onload = loadUsers;
-
-    </script>
 
 </body>
 </html>

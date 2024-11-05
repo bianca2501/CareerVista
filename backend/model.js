@@ -1,4 +1,5 @@
-import { Schema, model } from "mongoose";
+// Import mongoose at the top of the file
+import mongoose, { Schema, model } from "mongoose";
 
 // User Schema
 const UserSchema = new Schema({
@@ -22,11 +23,11 @@ const UserSchema = new Schema({
   },
   test_result: {
     type: String,
-    unique: false,
     required: false,
   },
 });
 
+// Export UserModel
 export const UserModel = model("user", UserSchema);
 
 // Counselor Schema
@@ -59,6 +60,7 @@ const CounselorSchema = new Schema({
   },
 });
 
+// Export CounselorModel
 export const CounselorModel = model("counselor", CounselorSchema);
 
 // Feedback Schema
@@ -85,8 +87,10 @@ const FeedbackSchema = new Schema({
   },
 });
 
+// Export FeedbackModel
 export const FeedbackModel = model("feedback", FeedbackSchema);
 
+// Video Schema
 const VideoSchema = new Schema({
   title: {
     type: String,
@@ -103,8 +107,16 @@ const VideoSchema = new Schema({
   },
   description: {
     type: String,
-    required: false,
   },
 });
 
+// Export VideoModel
 export const VideoModel = model("video", VideoSchema);
+
+// Connect to MongoDB
+mongoose.connect('mongodb+srv://biancan2601:ZguGeLE0kITQIWY0@careervista.ppqol.mongodb.net/?retryWrites=true&w=majority&appName=CareerVista', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch((err) => console.error('Failed to connect to MongoDB:', err));

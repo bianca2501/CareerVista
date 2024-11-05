@@ -326,21 +326,36 @@
         alert('Review submitted successfully!');
       }
 
-      function submitFeedback(event) {
-        event.preventDefault();
-        const feedbackMessage = document.getElementById('feedback-message').value;
-        const feedbackRating = document.getElementById('rating').value;
+    async function submitFeedback(event) {
+  event.preventDefault();
+  const feedbackMessage = document.getElementById('feedback-message').value;
+  const feedbackRating = document.getElementById('rating').value;
 
-        // Handle feedback submission here
-        console.log('Feedback submitted:', {
-          feedbackMessage,
-          feedbackRating,
-        });
+  // Replace with actual userId and counselorId from session or state
+  const userId = 'USER_ID_PLACEHOLDER';
+  const counselorId = 'COUNSELOR_ID_PLACEHOLDER';
 
-        // Clear the form
-        document.getElementById('feedback-form').reset();
-        alert('Feedback submitted successfully!');
-      }
+  try {
+    const response = await fetch('/submit-feedback', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ feedbackMessage, feedbackRating, userId, counselorId }),
+    });
+
+    if (response.ok) {
+      alert('Feedback submitted successfully!');
+      document.getElementById('feedback-form').reset();
+    } else {
+      const errorData = await response.json();
+      alert('Failed to submit feedback: ' + errorData.error);
+    }
+  } catch (error) {
+    console.log('Error submitting feedback:', error);
+    alert('An error occurred while submitting feedback.');
+  }
+}
 
       function joinSession(counselor) {
         console.log('Joining session with', counselor);
