@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard | DigiLift Careers</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background-color: #f9f9f9; /* Light grey background */
+        color: #333;
+      }
+
+      /* Top Navigation Bar */
+      .navbar {
+        background-color: #ffffff; /* White background */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+      }
+
+      .navbar h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333; /* Black text */
+      }
+
+      .navbar ul {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .navbar ul li a {
+        text-decoration: none;
+        color: #333;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+      }
+
+      .navbar ul li a:hover {
+        background-color: #f0f0f0; /* Light grey on hover */
+      }
+
+      .navbar ul li a i {
+        margin-right: 10px;
+        font-size: 1.2rem;
+      }
+
+      .navbar .signout-btn {
+        background-color: #333; /* Black button */
+        color: white;
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .navbar .signout-btn:hover {
+        background-color: #555; /* Darker grey on hover */
+        transform: translateY(-3px);
+      }
+
+      /* Main Content */
+      .main-content {
+        padding: 100px 40px 40px; /* Adjusted for fixed navbar */
+        background-color: #ffffff; /* White background */
+      }
+
+      .main-content h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #333; /* Black text */
+        margin-bottom: 20px;
+      }
+
+      /* Cards */
+      .card {
+        background-color: #ffffff; /* White background */
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+        padding: 20px;
+        margin-bottom: 20px;
+        text-align: left; /* Align text to the left */
+      }
+
+      .card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333; /* Black text */
+        margin-bottom: 15px;
+      }
+
+      .card p {
+        font-size: 1rem;
+        color: #555; /* Dark grey text */
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .card .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #333; /* Black button */
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .card .btn:hover {
+        background-color: #555; /* Darker grey on hover */
+        transform: translateY(-3px);
+      }
+
+      /* Courses Section */
+      .courses-list {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap; /* Allow wrapping if the screen is too small */
+        justify-content: space-between; /* Distribute items evenly */
+      }
+
+      .course-item {
+        background-color: #f9f9f9; /* Light grey background */
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+        flex: 1 1 calc(33.33% - 20px); /* Three items per row with gap */
+        max-width: calc(33.33% - 20px); /* Ensure equal width */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+      }
+
+      .course-item:hover {
+        transform: translateY(-5px); /* Lift the card on hover */
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Enhance shadow on hover */
+      }
+
+      .course-item img {
+        width: 100%; /* Make the image responsive */
+        height: 150px; /* Fixed height */
+        object-fit: cover; /* Ensure the image fits properly */
+        border-radius: 8px;
+        margin-bottom: 15px;
+      }
+
+      .course-item h4 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #333; /* Black text */
+        margin-bottom: 10px;
+      }
+
+      .course-item p {
+        font-size: 1rem;
+        color: #555; /* Dark grey text */
+        margin-bottom: 15px;
+      }
+
+      .course-item ul {
+        margin-bottom: 15px;
+        padding-left: 20px;
+        text-align: left; /* Align list items to the left */
+        width: 100%; /* Ensure the list takes full width */
+      }
+
+      .course-item ul li {
+        font-size: 0.9rem;
+        color: #555;
+        margin-bottom: 5px;
+      }
+
+      .course-link {
+        text-decoration: none; /* Remove underline */
+        color: inherit; /* Inherit text color */
+        flex: 1 1 calc(33.33% - 40px); /* Maintain flex layout */
+        max-width: calc(33.33% - 40px); /* Maintain equal width */
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .course-item {
+          flex: 1 1 calc(50% - 20px); /* Two items per row on smaller screens */
+          max-width: calc(50% - 20px);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .course-item {
+          flex: 1 1 100%; /* One item per row on very small screens */
+          max-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Navigation Bar -->
+    <div class="navbar">
+      <h2>Student Dashboard</h2>
+      <ul>
+        <li>
+          <a href="#" onclick="showContent('aptitude-tests')">
+            <i class="bx bx-file"></i> Aptitude Tests
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showContent('sessions')">
+            <i class="bx bx-history"></i> Counseling Sessions
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showContent('courses')">
+            <i class="bx bx-book"></i> Courses
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showContent('feedback')">
+            <i class="bx bx-cog"></i> Feedback
+          </a>
+        </li>
+      </ul>
+      <button class="signout-btn" onclick="signOut()">Sign Out</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Aptitude Tests Section -->
+      <div id="aptitude-tests" class="card">
+        <h3>Aptitude Tests</h3>
+        <p>
+          Take our aptitude test to discover which career path suits you best.
+          The test evaluates your strengths, interests, and skills to provide
+          personalized recommendations.
+        </p>
+        <a href="test.html" class="btn">Take Test</a>
+      </div>
+
+      <!-- Counseling Sessions Section -->
+      <div id="sessions" class="card">
+        <h3>Counseling Sessions</h3>
+        <div class="counselor-list">
+          <div class="counselor-item">
+            <h4>Ms. Deepa Panakal</h4>
+            <p>
+              Payment Method: Online Payment (Google Pay) at the start of the
+              session.
+            </p>
+            <p>
+              Session Fee:
+              <ul>
+                <li>First Session (1 hour): ₹1500</li>
+                <li>Package of 3 Sessions: ₹3000</li>
+              </ul>
+            </p>
+            <a href="booksession.html" class="btn">Book Session</a>
+            <a href="vc.html" class="btn">Join Session</a>
+          </div>
+          <div class="counselor-item">
+            <h4>Mr. David Woods</h4>
+            <p>
+              Payment Method: Online Payment (PayPal) at the start of the
+              session.
+            </p>
+            <p>
+              Session Fee:
+              <ul>
+                <li>First Session (1 hour): ₹900</li>
+                <li>Package of 3 Sessions: ₹2500</li>
+              </ul>
+            </p>
+            <a href="booksession.html" class="btn">Book Session</a>
+            <a href="vc.html" class="btn">Join Session</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Courses Section -->
+      <div id="courses" class="card">
+        <h3>Courses after 10</h3>
+        <div class="courses-list">
+          <!-- Science Stream -->
+          <a href="science.html" class="course-link">
+            <div class="course-item">
+              <img src="C:\Bianca Codes\ACareerVista\frontend\images\science.jpg" alt="Science" />
+              <h4>Science Stream</h4>
+              <p>
+                The Science Stream explores the wonders of the natural world
+                through subjects like Physics, Chemistry, Biology, and
+                Mathematics, fostering analytical and problem-solving skills.
+              </p>
+              <h5>Subjects You'll Encounter:</h5>
+              <ul>
+                <li>Physics ⚡</li>
+                <li>Chemistry 🧪</li>
+                <li>Biology 🧬</li>
+                <li>Mathematics 📐</li>
+                <li>English 📚</li>
+                <li>Hindi / French (Optional) 📝</li>
+                <li>Computer Science (Optional) 💻</li>
+                <li>Environmental Science (Optional) 🌱</li>
+                <li>Biotechnology (Optional) 🧫</li>
+                <li>Physical Education (Optional) 🏅</li>
+                <li>Psychology (Optional) 🧠</li>
+              </ul>
+            </div>
+          </a>
+
+          <!-- Commerce Stream -->
+          <a href="commerce.html" class="course-link">
+            <div class="course-item">
+              <img src="C:\Bianca Codes\ACareerVista\frontend\images\commerce.jpg" alt="Commerce" />
+              <h4>Commerce Stream</h4>
+              <p>
+                The Commerce Stream focuses on business, finance, and economics,
+                preparing students for careers in management, accounting, and
+                entrepreneurship.
+              </p>
+              <h5>Subjects You'll Encounter:</h5>
+              <ul>
+                <li>Accountancy 📊</li>
+                <li>Economics 📈</li>
+                <li>Business Studies 🏢</li>
+                <li>Mathematics 📐</li>
+                <li>English 📚</li>
+                <li>Hindi / French (Optional) 📝</li>
+                <li>Informatics Practices (Optional) 💻</li>
+                <li>Entrepreneurship (Optional) 🚀</li>
+                <li>Legal Studies (Optional) ⚖️</li>
+                <li>Physical Education (Optional) 🏅</li>
+                <li>Applied Mathematics (Optional) 📏</li>
+              </ul>
+            </div>
+          </a>
+
+          <!-- Arts Stream -->
+          <a href="arts.html" class="course-link">
+            <div class="course-item">
+              <img src="C:\Bianca Codes\ACareerVista\frontend\images\arts.jpg" alt="Arts" />
+              <h4>Arts Stream</h4>
+              <p>
+                The Arts Stream delves into the study of humanities, culture, and
+                society, offering diverse subjects that nurture creativity and
+                critical thinking.
+              </p>
+              <h5>Subjects You'll Encounter:</h5>
+              <ul>
+                <li>History 🏺</li>
+                <li>Political Science 🗳️</li>
+                <li>Geography 🌍</li>
+                <li>Sociology 🧑‍🤝‍🧑</li>
+                <li>Psychology 🧠</li>
+                <li>English 📚</li>
+                <li>Hindi / French (Optional) 📝</li>
+                <li>Philosophy (Optional) 📜</li>
+                <li>Fine Arts (Optional) 🎨</li>
+                <li>Physical Education (Optional) 🏅</li>
+                <li>Home Science (Optional) 🍲</li>
+              </ul>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Feedback Section -->
+      <div id="feedback" class="card">
+        <h3>Feedback</h3>
+        <p>We value your feedback! Let us know how we can improve.</p>
+        <form>
+          <label for="feedback-message">Your Message:</label>
+          <textarea
+            id="feedback-message"
+            name="feedback-message"
+            rows="5"
+            required
+          ></textarea>
+
+          <label for="rating">Rate Your Experience:</label>
+          <select id="rating" name="rating" required>
+            <option value="">Select a rating</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+
+          <button type="submit" class="btn">Submit Feedback</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function showContent(sectionId) {
+        // Hide all sections
+        const sections = document.querySelectorAll(".card");
+        sections.forEach((section) => (section.style.display = "none"));
+
+        // Show the selected section
+        const selectedSection = document.getElementById(sectionId);
+        if (selectedSection) {
+          selectedSection.style.display = "block";
+        }
+      }
+
+      // Show the Aptitude Tests section by default
+      showContent("aptitude-tests");
+
+      // Sign Out Functionality
+      function signOut() {
+        window.location.href = "roleselection.html";
+      }
+    </script>
+  </body>
+</html>

@@ -3,9 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About Us | CareerVista</title>
+    <title>DigiLift Careers | AI-Powered Career Guidance</title>
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -15,13 +19,13 @@
         padding: 0;
         box-sizing: border-box;
         font-family: "Poppins", sans-serif;
+        scroll-behavior: smooth;
       }
 
       body {
-        font-family: "Poppins", sans-serif;
         color: #333;
         line-height: 1.6;
-        background-color: #f9f9f9;
+        background-color: #ffffff; /* Pure white background */
       }
 
       a {
@@ -29,78 +33,162 @@
         color: inherit;
       }
 
+      /* Dashboard (Top Navigation Bar) */
+      .dashboard {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #ffffff; /* Pure white */
+        color: #333;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+      }
+
+      .dashboard .logo {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .dashboard .auth-links a {
+        margin-left: 20px;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #333;
+        transition: color 0.3s ease;
+      }
+
+      .dashboard .auth-links a:hover {
+        color: #555; /* Darker grey for hover */
+      }
+
       /* Hero Section */
       .hero {
-        background-image: url("../images/your-image.jpg");
-        background-size: cover;
-        background-position: center;
+        background-color: #f9f9f9; /* Light grey background */
         height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
-        position: relative;
-      }
-
-      .hero-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
+        text-align: center;
+        padding: 0 20px;
       }
 
       .hero-content {
-        position: relative;
-        z-index: 1;
-        text-align: center;
+        max-width: 800px;
+        padding: 20px;
       }
 
       .hero h1 {
-        font-size: 4rem;
-        letter-spacing: 2px;
+        font-size: 3.5rem;
+        letter-spacing: -1px;
         margin-bottom: 20px;
+        font-weight: 700;
+        color: #333;
       }
 
       .hero p {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
+        font-size: 1.25rem;
+        margin-bottom: 40px;
+        font-weight: 400;
+        color: #555;
       }
 
       .hero a {
-        padding: 10px 30px;
-        background-color: #fff;
-        color: #333;
-        border-radius: 30px;
-        font-size: 1.2rem;
-        letter-spacing: 1px;
-        transition: background 0.3s ease;
         display: inline-block;
-        margin: 10px;
+        padding: 15px 40px;
+        background-color: #333; /* Dark button */
+        color: white;
+        border-radius: 30px;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
       }
 
       .hero a:hover {
-        background-color: #264a6c;
-        color: white;
+        background-color: #555; /* Darker on hover */
+        transform: translateY(-5px);
       }
 
-      /* Section Styles */
-      section {
-        padding: 60px 20px;
+      /* Features Section */
+      .features {
+        padding: 80px 20px;
         max-width: 1200px;
         margin: 0 auto;
         text-align: center;
+        background-color: #ffffff; /* Pure white background */
       }
 
-      section h2 {
+      .features h2 {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        color: #333;
+        font-weight: 700;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .feature-card {
+        background-color: #f9f9f9; /* Light grey background */
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: center;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow on hover */
+      }
+
+      .feature-card i {
+        font-size: 3rem;
+        color: #333; /* Dark grey for icons */
+        margin-bottom: 15px;
+        transition: color 0.3s ease;
+      }
+
+      .feature-card:hover i {
+        color: #555; /* Darker grey for hover */
+      }
+
+      .feature-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .feature-card p {
+        font-size: 1rem;
+        color: #555;
+      }
+
+      /* About Section */
+      .about {
+        padding: 80px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+        background-color: #f9f9f9; /* Light grey background */
+      }
+
+      .about h2 {
         font-size: 2.5rem;
         margin-bottom: 20px;
-        color: #264a6c;
-        font-weight: 600;
+        color: #333;
+        font-weight: 700;
       }
 
-      section p {
+      .about p {
         font-size: 1.2rem;
         margin-bottom: 40px;
         color: #555;
@@ -109,111 +197,173 @@
         margin-right: auto;
       }
 
-      /* Image Styling */
-      .section-img {
-        margin: 30px 0;
-        width: 100%;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      img {
-        width: 100%;
-        height: auto;
-        border-radius: 10px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      }
-
       /* Contact Section */
+      .contact {
+        padding: 80px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+        background-color: #ffffff; /* Pure white background */
+      }
+
+      .contact h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #333;
+        font-weight: 700;
+      }
+
       .contact-info {
         display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-      }
-
-      .contact-info div {
-        margin-bottom: 20px;
+        flex-direction: column;
+        gap: 15px;
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: #333;
       }
 
       /* Footer */
       footer {
-        background-color: #333;
+        background-color: #333; /* Dark background */
         color: white;
-        padding: 30px 0;
+        padding: 40px 0;
         text-align: center;
       }
 
       footer p {
-        margin: 0;
-        font-size: 1.1rem;
+        margin: 5px 0;
+        font-size: 1rem;
+      }
+
+      footer a {
+        color: #ff7f50; /* Coral */
+        text-decoration: underline;
+        transition: color 0.3s ease;
+      }
+
+      footer a:hover {
+        color: #ff6347; /* Tomato */
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .dashboard .logo {
+          font-size: 1.2rem;
+        }
+
+        .dashboard .auth-links a {
+          font-size: 0.9rem;
+          margin-left: 15px;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .hero p {
+          font-size: 1rem;
+        }
+
+        .hero a {
+          font-size: 0.9rem;
+          padding: 12px 30px;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
   <body>
-    <!-- Hero Section -->
-    <div class="hero">
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <h1>About Us</h1>
-        <p>Where Dreams Meet Direction</p>
-        <a href="#vision">Learn More</a>
-        <!-- Join Us Now Button -->
-        <a href="roleselection.html">Join Us Now</a>
+    <!-- Dashboard (Top Navigation Bar) -->
+    <div class="dashboard">
+      <div class="logo">DigiLift Careers</div>
+      <div class="auth-links">
+        <a href="login/loginCV.html">Login</a>
+        <a href="roleselection.html">Signup</a>
+        <a href="mailto:info@digiliftcareers.com">Contact</a>
       </div>
     </div>
 
-    <!-- Vision Section -->
-    <section id="vision">
-      <h2>Vision Statement</h2>
-      <p>
-        "To empower every student to discover their true potential and navigate
-        their career path with confidence, clarity, and support, leading to a
-        fulfilling and successful future."
-      </p>
-      <div class="section-img">
-        <img src="../images/vision.jpg" alt="Vision" />
+    <!-- Hero Section -->
+    <div class="hero">
+      <div class="hero-content">
+        <h1>Discover Your Perfect Career</h1>
+        <p>
+          Make smart decisions with our revolutionary AI-enabled career guidance tools and expert career counselors.
+        </p>
+        <a href="#features">Explore Features</a>
+        <a href="roleselection.html">Get Started</a>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+      <h2>Our Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <i class="bx bx-brain"></i>
+          <h3>AI-Powered Recommendations</h3>
+          <p>
+            Get personalized career suggestions based on your aptitude test results and academic records.
+          </p>
+        </div>
+        <div class="feature-card">
+          <i class="bx bx-chat"></i>
+          <h3>AI Chatbot Assistance</h3>
+          <p>
+            Our AI chatbot is available 24/7 to answer your career-related queries and schedule expert consultations.
+          </p>
+        </div>
+        <div class="feature-card">
+          <i class="bx bx-lock"></i>
+          <h3>DigiLocker Integration</h3>
+          <p>
+            Securely access and use your academic records for more accurate and data-driven career suggestions.
+          </p>
+        </div>
       </div>
     </section>
 
-    <!-- Mission Section -->
-    <section id="mission">
-      <h2>Mission Statement</h2>
+    <!-- About Section -->
+    <section id="about" class="about">
+      <h2>About DigiLift Careers</h2>
       <p>
-        "To provide comprehensive and personalized career counseling services
-        that guide students through critical educational milestones. By offering
-        aptitude tests, expert counseling sessions, mental health support, and
-        motivational resources, we aim to help students make informed decisions
-        about their academic and career paths."
+        Many students struggle with choosing the right career due to a lack of proper guidance and awareness. Existing career counseling services are often expensive or provide generic advice that does not meet individual needs. DigiLift Careers aims to address this issue by developing a web-based platform that offers AI-powered career recommendations.
       </p>
-    </section>
-
-    <!-- Our Story Section -->
-    <section id="story">
-      <h2>Our Story</h2>
       <p>
-        Career Vista was founded by three third-year Engineering students and
-        counselors who saw a need for personalized career guidance. We are
-        dedicated to helping students discover their potential and make
-        confident career choices.
+        Our project will integrate an AI chatbot to assist users with queries, schedule expert consultations, and analyze aptitude test results. Additionally, we plan to incorporate DigiLocker to access academic records for more data-driven suggestions. The platform will be built using HTML, CSS, JavaScript, Python, Node.js, and MongoDB, ensuring a user-friendly experience.
+      </p>
+      <p>
+        While our project is in the initial stages, we aim to create a structured and accessible career guidance system. Some challenges we anticipate include ensuring data privacy, improving AI accuracy, and making the platform engaging for users. The project will require continuous development and testing to be truly effective. If successful, we hope to refine and expand it further in the future to provide more reliable and personalized career counseling.
       </p>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact">
+    <section id="contact" class="contact">
       <h2>Contact Us</h2>
+      <p>
+        Have questions or want to learn more? Reach out to us!
+      </p>
       <div class="contact-info">
-        <div><strong>Email:</strong> info@careervista.com</div>
-        <div><strong>Phone:</strong> +123-456-7890</div>
         <div>
-          <strong>Address:</strong> 123 Career Pathway, DreamCity, DC 12345
+          <strong>Email:</strong> info@digiliftcareers.com
+        </div>
+        <div>
+          <strong>Phone:</strong> +123-456-7890
         </div>
       </div>
     </section>
 
     <!-- Footer -->
     <footer>
-      <p>&copy; 2024 CareerVista | All rights reserved</p>
+      <p>
+        &copy; 2024 DigiLift Careers | All rights reserved
+      </p>
+      <p>
+        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+      </p>
     </footer>
   </body>
 </html>
