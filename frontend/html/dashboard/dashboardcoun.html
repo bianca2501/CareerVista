@@ -3,137 +3,184 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard | CareerVista Counselor</title>
+    <title>Counselor Dashboard | DigiLift Careers</title>
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      body {
-        font-family: Arial, sans-serif;
+      /* Global Styles */
+      * {
         margin: 0;
         padding: 0;
-        background-color: #f4f4f9;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background-color: #f9f9f9; /* Light grey background */
         color: #333;
       }
-      .dashboard-wrapper {
-        display: flex;
-        height: 100vh;
-      }
-      .sidebar {
-        width: 250px;
-        background-color: #264a6c;
-        color: white;
-        padding: 20px;
-      }
-      .sidebar h2 {
-        text-align: center;
-        margin-bottom: 30px;
-      }
-      .sidebar ul {
-        list-style: none;
-        padding: 0;
-      }
-      .sidebar ul li {
-        margin-bottom: 20px;
-      }
-      .sidebar ul li a {
-        color: white;
-        text-decoration: none;
-        font-size: 1.2em;
-        display: flex;
-        align-items: center;
-      }
-      .sidebar ul li a i {
-        margin-right: 10px;
-      }
-      .main-content {
-        flex-grow: 1;
-        padding: 40px;
-      }
-      .section {
-        margin-bottom: 40px;
-      }
-      .section h3 {
-        border-bottom: 2px solid #264a6c;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
-        font-size: 1.8em;
-      }
-      .section p {
-        font-size: 1.1em;
-        line-height: 1.6;
-      }
-      /* Hide content sections by default */
-      .section {
-        display: none;
-      }
-      /* Show content section when active */
-      .section.active {
-        display: block;
-      }
-      /* Styles for the form */
-      form {
-        display: flex;
-        flex-direction: column;
-      }
-      .form-field {
-        margin-bottom: 15px;
-      }
-      .form-field label {
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
-      .form-field input,
-      .form-field textarea,
-      .form-field select {
-        padding: 10px;
-        font-size: 1em;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-      .btn {
-        padding: 10px 20px;
-        background-color: #264a6c;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1.2em;
-      }
-      .btn:hover {
-        background-color: #3a5a7c;
-      }
-      .counselor-list {
-        margin-top: 20px;
-      }
-      .counselor-item {
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 10px;
-        margin-bottom: 10px;
+
+      /* Top Navigation Bar */
+      .navbar {
+        background-color: #ffffff; /* White background */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+        padding: 15px 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
       }
-      .counselor-details {
-        flex-grow: 1;
+
+      .navbar h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333; /* Black text */
       }
-      .counselor-name {
-        font-weight: bold;
-        font-size: 1.2em;
+
+      .navbar ul {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 20px;
       }
-      .view-reviews {
-        color: #264a6c;
-        text-decoration: underline;
+
+      .navbar ul li a {
+        text-decoration: none;
+        color: #333;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+      }
+
+      .navbar ul li a:hover {
+        background-color: #f0f0f0; /* Light grey on hover */
+      }
+
+      .navbar ul li a i {
+        margin-right: 10px;
+        font-size: 1.2rem;
+      }
+
+      .navbar .signout-btn {
+        background-color: #333; /* Black button */
+        color: white;
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: 500;
         cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
       }
-      /* Responsive design */
+
+      .navbar .signout-btn:hover {
+        background-color: #555; /* Darker grey on hover */
+        transform: translateY(-3px);
+      }
+
+      /* Main Content */
+      .main-content {
+        padding: 100px 40px 40px; /* Adjusted for fixed navbar */
+        background-color: #ffffff; /* White background */
+      }
+
+      .main-content h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #333; /* Black text */
+        margin-bottom: 20px;
+      }
+
+      /* Cards */
+      .card {
+        background-color: #ffffff; /* White background */
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+        padding: 20px;
+        margin-bottom: 20px;
+        text-align: left; /* Align text to the left */
+      }
+
+      .card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333; /* Black text */
+        margin-bottom: 15px;
+      }
+
+      .card p {
+        font-size: 1rem;
+        color: #555; /* Dark grey text */
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .card .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #333; /* Black button */
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      .card .btn:hover {
+        background-color: #555; /* Darker grey on hover */
+        transform: translateY(-3px);
+      }
+
+      .card .btn:disabled {
+        background-color: #ccc; /* Grey for disabled buttons */
+        cursor: not-allowed;
+      }
+
+      /* Tables for Counselor */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+
+      table th,
+      table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      table th {
+        background-color: #f9f9f9; /* Light grey background */
+        font-weight: 600;
+      }
+
+      table tr:hover {
+        background-color: #f0f0f0; /* Light grey on hover */
+      }
+
+      /* Responsive Design */
       @media (max-width: 768px) {
-        .dashboard-wrapper {
+        .navbar ul {
           flex-direction: column;
+          gap: 10px;
         }
-        .sidebar {
+
+        .navbar .signout-btn {
           width: 100%;
           text-align: center;
         }
@@ -141,228 +188,197 @@
     </style>
   </head>
   <body>
-    <div class="dashboard-wrapper">
-      <div class="sidebar">
-        <h2>Counselor Dashboard</h2>
-        <ul>
-          <li>
-            <a href="#" onclick="showContent('sessions')"
-              ><i class="bx bx-history"></i> Manage Sessions</a
-            >
-          </li>
-          <li>
-            <a href="#" onclick="showContent('feedback')"
-              ><i class="bx bx-cog"></i> Student Feedback</a
-            >
-          </li>
-          <li>
-            <a href="#" onclick="showContent('resources')"
-              ><i class="bx bx-library"></i> Resources</a
-            >
-          </li>
-        </ul>
+    <!-- Top Navigation Bar -->
+    <div class="navbar">
+      <h2>Counselor Dashboard</h2>
+      <ul>
+        <li>
+          <a href="#" onclick="showContent('view-schedule')">
+            <i class="bx bx-calendar"></i> View Schedule
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showContent('manage-sessions')">
+            <i class="bx bx-time"></i> Manage Sessions
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="showContent('student-interactions')">
+            <i class="bx bx-chat"></i> Student Interactions
+          </a>
+        </li>
+      </ul>
+      <button class="signout-btn" onclick="signOut()">Sign Out</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- View Schedule Section -->
+      <div id="view-schedule" class="card">
+        <h3>View Schedule</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Student Name</th>
+              <th>Session Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2023-10-15</td>
+              <td>10:00 AM</td>
+              <td>John Doe</td>
+              <td>Career Counseling</td>
+            </tr>
+            <tr>
+              <td>2023-10-16</td>
+              <td>11:00 AM</td>
+              <td>Jane Smith</td>
+              <td>Academic Guidance</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="main-content">
-        <div id="image-gallery" class="image-gallery">
-          <img
-            id="slideshow-image"
-            src="1.jpg"
-            alt="Slideshow Image"
-          />
-        </div>
-
-        <div class="section" id="sessions">
-          <h3>Manage Sessions</h3>
-          <p>Overview of upcoming sessions and counseling history.</p>
-          <h4>Upcoming Sessions</h4>
-          <div class="counselor-list">
-            <div class="counselor-item">
-              <div class="counselor-details">
-                <div class="counselor-name">Ajaykumar Nadar</div>
-                <div>
-                  Session Date: 10/11/2024
-                  <br />
-                  Payment Status: Pending
-                </div>
-                <span class="view-reviews" onclick="showReviews('Ajaykumar Nadar')"
-                  >View Reviews</span
+      <!-- Manage Sessions Section -->
+      <div id="manage-sessions" class="card" style="display: none">
+        <h3>Manage Sessions</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Student Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>John Doe</td>
+              <td>2023-10-15</td>
+              <td>10:00 AM</td>
+              <td>
+                <button class="btn">Edit</button>
+                <button class="btn">Cancel</button>
+                <button
+                  class="btn join-btn"
+                  data-time="2023-10-15T10:00:00"
+                  onclick="joinSession('John Doe')"
                 >
-              </div>
-              <a href="vc.html">
-                <button class="btn" onclick="joinSession('Ajaykumar Nadar')">
                   Join Session
                 </button>
-              </a>
-            </div>
-            <div class="counselor-item">
-              <div class="counselor-details">
-                <div class="counselor-name">Chris Shukla</div>
-                <div>
-                  Session Date: 11/11/2024
-                  <br />
-                  Payment Status: Completed
-                </div>
-                <span class="view-reviews" onclick="showReviews('Chris Shukla')"
-                  >View Reviews</span
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Jane Smith</td>
+              <td>2023-10-16</td>
+              <td>11:00 AM</td>
+              <td>
+                <button class="btn">Edit</button>
+                <button class="btn">Cancel</button>
+                <button
+                  class="btn join-btn"
+                  data-time="2023-10-16T11:00:00"
+                  onclick="joinSession('Jane Smith')"
                 >
-              </div>
-              <a href="#" onclick="showContent('review')">
-                <button class="btn">Submit Review</button>
-              </a>
-            </div>
-          </div>
-        </div>
+                  Join Session
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="btn">Add New Session</button>
+      </div>
 
-        <!-- Review Section -->
-        <div class="section" id="review">
-          <h3>Submit Your Review</h3>
-          <p>Share your experience to help improve future counseling sessions.</p>
-          <form id="review-form" onsubmit="submitReview(event)">
-            <label for="review-message">Your Review:</label>
-            <textarea
-              id="review-message"
-              name="review-message"
-              rows="5"
-              required
-            ></textarea>
-
-            <label for="review-rating">Rating:</label>
-            <select id="review-rating" name="review-rating" required>
-              <option value="">Select a rating</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-
-            <button type="submit" class="btn">Submit Review</button>
-          </form>
-        </div>
-
-        <div class="section" id="resources">
-          <h3>Resources</h3>
-          <p>
-            Access materials and tools to assist students in their career
-            planning.
-          </p>
-          <ul style="list-style-type: none; padding: 0; margin: 0">
-            <li style="margin-bottom: 15px">
-              <a
-                href="aptitude_test_guide.pdf"
-                class="btn"
-                target="_blank"
-                style="width: 100%; text-align: center"
-                >Aptitude Test Guide</a
-              >
-            </li>
-            <li style="margin-bottom: 15px">
-              <a
-                href="career-paths.html"
-                class="btn"
-                style="width: 100%; text-align: center"
-                >Career Paths Information</a
-              >
-            </li>
-            <li style="margin-bottom: 15px">
-              <a
-                href="counseling-techniques.html"
-                class="btn"
-                style="width: 100%; text-align: center"
-                >Effective Counseling Techniques</a
-              >
-            </li>
-          </ul>
-        </div>
-
-        <div class="section" id="feedback">
-          <h3>Student Feedback</h3>
-          <p>Your feedback helps improve the counseling process.</p>
-          <form id="feedback-form" onsubmit="submitFeedback(event)">
-            <label for="feedback-message">Your Feedback Message:</label>
-            <textarea
-              id="feedback-message"
-              name="feedback-message"
-              rows="5"
-              required
-            ></textarea>
-
-            <label for="rating">Rate Your Counseling Experience:</label>
-            <select id="rating" name="rating" required>
-              <option value="">Select a rating</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-
-            <button type="submit" class="btn">Submit Feedback</button>
-          </form>
-        </div>
+      <!-- Student Interactions Section -->
+      <div id="student-interactions" class="card" style="display: none">
+        <h3>Student Interactions</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Student Name</th>
+              <th>Message</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>John Doe</td>
+              <td>I need help with career options.</td>
+              <td>2023-10-10</td>
+              <td>
+                <button class="btn" onclick="openChatbox('John Doe')">Reply</button>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Jane Smith</td>
+              <td>Can you suggest some good colleges?</td>
+              <td>2023-10-11</td>
+              <td>
+                <button class="btn" onclick="openChatbox('Jane Smith')">Reply</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
     <script>
-      function showContent(contentId) {
-        const sections = document.querySelectorAll('.section');
-        sections.forEach((section) => {
-          section.classList.remove('active');
+      // Function to show/hide sections
+      function showContent(sectionId) {
+        // Hide all sections
+        const sections = document.querySelectorAll(".card");
+        sections.forEach((section) => (section.style.display = "none"));
+
+        // Show the selected section
+        const selectedSection = document.getElementById(sectionId);
+        if (selectedSection) {
+          selectedSection.style.display = "block";
+        }
+      }
+
+      // Show the View Schedule section by default
+      showContent("view-schedule");
+
+      // Function to enable/disable Join Session buttons based on time
+      function checkSessionTimes() {
+        const joinButtons = document.querySelectorAll(".join-btn");
+
+        joinButtons.forEach((button) => {
+          const sessionTime = new Date(button.getAttribute("data-time"));
+          const currentTime = new Date();
+
+          // Enable the button if the session time has arrived
+          if (currentTime >= sessionTime) {
+            button.disabled = false;
+          } else {
+            button.disabled = true;
+          }
         });
-        document.getElementById(contentId).classList.add('active');
       }
 
-      function submitReview(event) {
-        event.preventDefault();
-        const reviewMessage = document.getElementById('review-message').value;
-        const reviewRating = document.getElementById('review-rating').value;
+      // Check session times every second
+      setInterval(checkSessionTimes, 1000);
 
-        // Here, you can handle the submission of the review
-        console.log('Review submitted:', { reviewMessage, reviewRating });
-
-        // Clear the form
-        document.getElementById('review-form').reset();
-        alert('Review submitted successfully!');
+      // Function to join a session
+      function joinSession(studentName) {
+        alert(`Joining session with ${studentName}...`);
+        // Redirect to a video call page or open a video call modal
+        window.location.href = "../video call/cvc.html"; // Replace with your video call page
       }
 
-    async function submitFeedback(event) {
-  event.preventDefault();
-  const feedbackMessage = document.getElementById('feedback-message').value;
-  const feedbackRating = document.getElementById('rating').value;
-
-  // Replace with actual userId and counselorId from session or state
-  const userId = 'USER_ID_PLACEHOLDER';
-  const counselorId = 'COUNSELOR_ID_PLACEHOLDER';
-
-  try {
-    const response = await fetch('/submit-feedback', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ feedbackMessage, feedbackRating, userId, counselorId }),
-    });
-
-    if (response.ok) {
-      alert('Feedback submitted successfully!');
-      document.getElementById('feedback-form').reset();
-    } else {
-      const errorData = await response.json();
-      alert('Failed to submit feedback: ' + errorData.error);
-    }
-  } catch (error) {
-    console.log('Error submitting feedback:', error);
-    alert('An error occurred while submitting feedback.');
-  }
-}
-
-      function joinSession(counselor) {
-        console.log('Joining session with', counselor);
-      }
-
-      function showReviews(counselor) {
-        alert('Showing reviews for ' + counselor);
+      // Sign Out Functionality
+      function signOut() {
+        window.location.href = "login.html"; // Redirect to login page
       }
     </script>
   </body>

@@ -148,30 +148,28 @@
       /* Courses Section */
       .courses-list {
         display: flex;
-        gap: 20px;
-        flex-wrap: wrap; /* Allow wrapping if the screen is too small */
-        justify-content: space-between; /* Distribute items evenly */
+        flex-direction: row; /* Stack items vertically */
+        gap: 20px; /* Space between items */
       }
-
+      
       .course-item {
         background-color: #f9f9f9; /* Light grey background */
         padding: 20px;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-        flex: 1 1 calc(33.33% - 20px); /* Three items per row with gap */
-        max-width: calc(33.33% - 20px); /* Ensure equal width */
+        width: 100%; /* Full width for each item */
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
         transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
       }
-
+      
       .course-item:hover {
         transform: translateY(-5px); /* Lift the card on hover */
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Enhance shadow on hover */
       }
-
+      
       .course-item img {
         width: 100%; /* Make the image responsive */
         height: 150px; /* Fixed height */
@@ -179,33 +177,38 @@
         border-radius: 8px;
         margin-bottom: 15px;
       }
-
+      
       .course-item h4 {
         font-size: 1.3rem;
         font-weight: 600;
         color: #333; /* Black text */
         margin-bottom: 10px;
       }
-
+      
       .course-item p {
         font-size: 1rem;
         color: #555; /* Dark grey text */
         margin-bottom: 15px;
       }
-
+      
       .course-item ul {
         margin-bottom: 15px;
         padding-left: 20px;
         text-align: left; /* Align list items to the left */
         width: 100%; /* Ensure the list takes full width */
       }
-
+      
       .course-item ul li {
         font-size: 0.9rem;
         color: #555;
         margin-bottom: 5px;
       }
-
+      
+      .course-link {
+        text-decoration: none; /* Remove underline */
+        color: inherit; /* Inherit text color */
+        width: 100%; /* Full width for each link */
+      }
       .course-link {
         text-decoration: none; /* Remove underline */
         color: inherit; /* Inherit text color */
@@ -227,6 +230,78 @@
           max-width: 100%;
         }
       }
+
+      /* Change Counselor Modal */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  width: 400px;
+}
+
+.modal h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.modal label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.modal select,
+.modal textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+.modal textarea {
+  resize: vertical; /* Allow vertical resizing */
+}
+
+.modal .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.modal .btn:hover {
+  background-color: #555;
+  transform: translateY(-3px);
+}
+
+/* Overlay for Modal */
+.overlay {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 1000;
+}
     </style>
   </head>
   <body>
@@ -274,41 +349,32 @@
       <!-- Counseling Sessions Section -->
       <div id="sessions" class="card">
         <h3>Counseling Sessions</h3>
-        <div class="counselor-list">
-          <div class="counselor-item">
-            <h4>Ms. Deepa Panakal</h4>
-            <p>
-              Payment Method: Online Payment (Google Pay) at the start of the
-              session.
-            </p>
-            <p>
-              Session Fee:
-              <ul>
-                <li>First Session (1 hour): ₹1500</li>
-                <li>Package of 3 Sessions: ₹3000</li>
-              </ul>
-            </p>
-            <a href="booksession.html" class="btn">Book Session</a>
-            <a href="vc.html" class="btn">Join Session</a>
-          </div>
-          <div class="counselor-item">
-            <h4>Mr. David Woods</h4>
-            <p>
-              Payment Method: Online Payment (PayPal) at the start of the
-              session.
-            </p>
-            <p>
-              Session Fee:
-              <ul>
-                <li>First Session (1 hour): ₹900</li>
-                <li>Package of 3 Sessions: ₹2500</li>
-              </ul>
-            </p>
-            <a href="booksession.html" class="btn">Book Session</a>
-            <a href="vc.html" class="btn">Join Session</a>
-          </div>
+        <div class="counselor-item">
+          <h4>Ms. Deepa Panakal</h4>
+          <p>
+            Payment Method: Online Payment (Google Pay) at the start of the session.
+          </p>
+          <p>
+            Session Fee:
+            <ul>
+              <li>First Session (1 hour): ₹1500</li>
+              <li>Package of 3 Sessions: ₹3000</li>
+            </ul>
+          </p>
+          <button
+            class="btn join-btn"
+            data-time="2023-10-15T10:00:00"
+            onclick="joinSession()"
+          >
+            Join Session
+          </button>
+          <button class="btn" onclick="openChangeCounselorModal()">
+            Change Counselor
+          </button>
         </div>
       </div>
+
+      
 
       <!-- Courses Section -->
       <div id="courses" class="card">
@@ -424,6 +490,36 @@
         </form>
       </div>
     </div>
+    <!-- Change Counselor Modal -->
+<div id="change-counselor-modal" class="modal">
+  <h4>Change Counselor</h4>
+  <form>
+    <label for="reason">Why do you want to change your counselor?</label>
+    <select id="reason" name="reason" required>
+      <option value="">Select a reason</option>
+      <option value="not-available">Counselor is not available</option>
+      <option value="not-helpful">Counselor is not helpful</option>
+      <option value="personal-reasons">Personal reasons</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label for="additional-info">Additional Information:</label>
+    <textarea
+      id="additional-info"
+      name="additional-info"
+      rows="5"
+      placeholder="Provide additional details (optional)"
+    ></textarea>
+
+    <button type="submit" class="btn">Submit Request</button>
+    <button type="button" class="btn" onclick="closeChangeCounselorModal()">
+      Cancel
+    </button>
+  </form>
+</div>
+
+<!-- Overlay for Modal -->
+<div id="overlay" class="overlay"></div>
 
     <script>
       function showContent(sectionId) {
@@ -440,6 +536,50 @@
 
       // Show the Aptitude Tests section by default
       showContent("aptitude-tests");
+
+            // Function to enable/disable Join Session button based on time
+      function checkSessionTime() {
+        const joinButton = document.querySelector(".join-btn");
+        const sessionTime = new Date(joinButton.getAttribute("data-time"));
+        const currentTime = new Date();
+
+        // Enable the button if the session time has arrived
+        if (currentTime >= sessionTime) {
+          joinButton.disabled = false;
+        } else {
+          joinButton.disabled = true;
+        }
+      }
+
+      // Check session time every second
+      setInterval(checkSessionTime, 1000);
+
+      // Function to join a session
+      function joinSession() {
+        alert("Joining session...");
+        // Redirect to a video call page or open a video call modal
+        window.location.href = "../video call/vc.html"; // Replace with your video call page
+      }
+
+      // Function to open the Change Counselor modal
+      function openChangeCounselorModal() {
+        const modal = document.getElementById("change-counselor-modal");
+        const overlay = document.getElementById("overlay");
+
+        // Show the modal and overlay
+        modal.style.display = "block";
+        overlay.style.display = "block";
+      }
+
+      // Function to close the Change Counselor modal
+      function closeChangeCounselorModal() {
+        const modal = document.getElementById("change-counselor-modal");
+        const overlay = document.getElementById("overlay");
+
+        // Hide the modal and overlay
+        modal.style.display = "none";
+        overlay.style.display = "none";
+      }
 
       // Sign Out Functionality
       function signOut() {
