@@ -1,260 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aptitude Test | CareerVista</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
+      /* Global Styles */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+      }
 
-        .test-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
 
-        h2 {
-            color: #264a6c;
-        }
+      h1,
+      h2 {
+        text-align: center;
+        color: #000;
+      }
 
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #264a6c;
-            color: white;
-            text-align: center;
-            font-size: 1.1em;
-            cursor: pointer;
-        }
+      .welcome-note,
+      .rules,
+      .instructions {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #e0e0e0;
+        border-radius: 8px;
+      }
 
-        .btn:hover {
-            background-color: #1e3a4d;
-        }
+      .rules ul,
+      .instructions ul {
+        padding-left: 20px;
+      }
 
-        .btn-dashboard {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            padding: 10px 20px;
-            background-color: #264a6c;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
+      .rules li,
+      .instructions li {
+        margin-bottom: 10px;
+      }
 
-        .btn-dashboard:hover {
-            background-color: #1e3a4d;
-        }
+      .question {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        user-select: none; /* Prevent copying */
+      }
 
-        input[type="radio"] {
-            margin-right: 10px;
-        }
+      .question p {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
 
-        .result-message {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #e0f7fa;
-            color: #264a6c;
-            font-size: 1.2em;
-            text-align: center;
-            display: none;
-        }
+      .question label {
+        display: block;
+        margin-bottom: 10px;
+      }
 
-        .access-denied {
-            background-color: #ffcccc;
-            color: #cc0000;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
+      .submit-button {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .submit-button:hover {
+        background-color: #333;
+      }
+
+      .result {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #e0e0e0;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      .hidden {
+        display: none;
+      }
     </style>
-</head>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Welcome Note -->
+      <div class="welcome-note">
+        <h1>Let's begin with Aptitude Test!</h1>
+        <p>
+          This test will help you discover your strengths and interests in various
+          fields. Take your time and answer honestly.
+        </p>
+      </div>
 
-<body>
-    <a href="dashboard.html" class="btn-dashboard">Back to Dashboard</a>
-    <div class="test-wrapper">
-        <div id="test-content">
-            <form id="aptitude-form">
-                <div id="question-container"></div>
-                <button type="submit" class="btn">Submit Answers</button>
-            </form>
-            <div id="result" class="result-message"></div>
+      <!-- Rules -->
+      <div class="rules">
+        <h2>Rules to Follow</h2>
+        <ul>
+          <li>Do not copy or share the questions.</li>
+          <li>Answer all questions to get accurate results.</li>
+          <li>Take your time and think carefully before answering.</li>
+          <li>Do not refresh the page during the test.</li>
+        </ul>
+      </div>
+
+      <!-- Instructions -->
+      <div class="instructions">
+        <h2>Instructions</h2>
+        <ul>
+          <li>The test is divided into two parts.</li>
+          <li>Each part contains 10 questions.</li>
+        </ul>
+      </div>
+
+      <!-- Part 1 -->
+      <div id="part1">
+        <h2>Part 1</h2>
+        <!-- Questions for Part 1 -->
+        <div class="question">
+          <p>What skill do you want to develop?</p>
+          <label><input type="radio" name="q1" value="Technology" /> Programming</label>
+          <label><input type="radio" name="q1" value="Business" /> Leadership</label>
+          <label><input type="radio" name="q1" value="Arts" /> Design</label>
+          <label><input type="radio" name="q1" value="Law" /> Legal analysis</label>
         </div>
-        <div id="access-denied" class="access-denied" style="display: none;">
-            <h2>Access Denied</h2>
-            <p>You have already submitted the test and cannot access it again.</p>
+        <div class="question">
+          <p>What kind of impact do you want to make?</p>
+          <label><input type="radio" name="q2" value="Law" /> Reforming laws and policies</label>
+          <label><input type="radio" name="q2" value="Environment" /> Promoting sustainability</label>
+          <label><input type="radio" name="q2" value="Healthcare" /> Advancing healthcare solutions</label>
+          <label><input type="radio" name="q2" value="Technology" /> Creating tech innovations</label>
         </div>
+        <div class="question">
+          <p>Which global issue do you want to address?</p>
+          <label><input type="radio" name="q3" value="Environment" /> Environmental degradation</label>
+          <label><input type="radio" name="q3" value="Healthcare" /> Access to healthcare</label>
+          <label><input type="radio" name="q3" value="Law" /> Legal inequalities</label>
+          <label><input type="radio" name="q3" value="Business" /> Economic disparities</label>
+        </div>
+        <div class="question">
+          <p>How do you prefer solving challenges?</p>
+          <label><input type="radio" name="q4" value="Technology" /> Technical solutions</label>
+          <label><input type="radio" name="q4" value="Business" /> Data-driven strategies</label>
+          <label><input type="radio" name="q4" value="Arts" /> Creative storytelling</label>
+          <label><input type="radio" name="q4" value="Law" /> Legal frameworks</label>
+        </div>
+        <div class="question">
+          <p>What inspires your career goals?</p>
+          <label><input type="radio" name="q5" value="Entrepreneurship" /> Innovating new ideas</label>
+          <label><input type="radio" name="q5" value="Entrepreneurship" /> Leading a startup</label>
+          <label><input type="radio" name="q5" value="Business" /> Climbing the corporate ladder</label>
+          <label><input type="radio" name="q5" value="Technology" /> Solving global problems</label>
+        </div>
+        <div class="question">
+          <p>How do you measure success?</p>
+          <label><input type="radio" name="q6" value="Business" /> Achieving organizational goals</label>
+          <label><input type="radio" name="q6" value="Entrepreneurship" /> Launching a successful venture</label>
+          <label><input type="radio" name="q6" value="Technology" /> Creating innovative solutions</label>
+          <label><input type="radio" name="q6" value="Arts" /> Impacting people through creativity</label>
+        </div>
+        <div class="question">
+          <p>What excites you in business?</p>
+          <label><input type="radio" name="q7" value="Business" /> Strategic management</label>
+          <label><input type="radio" name="q7" value="Business" /> Marketing and promotions</label>
+          <label><input type="radio" name="q7" value="Business" /> Financial growth</label>
+          <label><input type="radio" name="q7" value="Entrepreneurship" /> Scaling startups</label>
+        </div>
+        <div class="question">
+          <p>What inspires you in the tech world?</p>
+          <label><input type="radio" name="q8" value="Technology" /> Machine learning models</label>
+          <label><input type="radio" name="q8" value="Technology" /> IoT and smart devices</label>
+          <label><input type="radio" name="q8" value="Technology" /> Cloud computing</label>
+          <label><input type="radio" name="q8" value="Arts" /> Designing intuitive interfaces</label>
+        </div>
+        <div class="question">
+          <p>What motivates you to succeed?</p>
+          <label><input type="radio" name="q9" value="Entrepreneurship" /> Bringing new ideas to life</label>
+          <label><input type="radio" name="q9" value="Technology" /> Solving technical challenges</label>
+          <label><input type="radio" name="q9" value="Business" /> Managing successful projects</label>
+          <label><input type="radio" name="q9" value="Arts" /> Creating impactful designs</label>
+        </div>
+        <div class="question">
+          <p>How do you stay engaged in a project?</p>
+          <label><input type="radio" name="q10" value="Business" /> Managing teams effectively</label>
+          <label><input type="radio" name="q10" value="Technology" /> Solving technical challenges</label>
+          <label><input type="radio" name="q10" value="Arts" /> Exploring creative solutions</label>
+          <label><input type="radio" name="q10" value="Law" /> Drafting policies and contracts</label>
+        </div>
+        <!-- Add 25 more questions for Part 1 -->
+      </div>
+
+      <!-- Part 2 (Hidden Initially) -->
+      <div id="part2" class="hidden">
+        <h2>Part 2</h2>
+        <!-- Questions for Part 2 -->
+        <div class="question">
+          <p>How do you approach new challenges?</p>
+          <label><input type="radio" name="q36" value="Technology" /> By creating innovative solutions</label>
+          <label><input type="radio" name="q36" value="Business" /> By developing strategies</label>
+          <label><input type="radio" name="q36" value="Law" /> Through legal research</label>
+          <label><input type="radio" name="q36" value="Arts" /> By exploring creative ideas</label>
+        </div>
+        <div class="question">
+          <p>What motivates your career aspirations?</p>
+          <label><input type="radio" name="q37" value="Technology" /> Building innovative products</label>
+          <label><input type="radio" name="q37" value="Business" /> Leading organizational changes</label>
+          <label><input type="radio" name="q37" value="Law" /> Making legal reforms</label>
+          <label><input type="radio" name="q37" value="Healthcare" /> Advancing public health</label>
+        </div>
+        <div class="question">
+          <p>Which skill do you enjoy enhancing?</p>
+          <label><input type="radio" name="q38" value="Technology" /> Programming and debugging</label>
+          <label><input type="radio" name="q38" value="Arts" /> Designing and illustrating</label>
+          <label><input type="radio" name="q38" value="Business" /> Strategic planning</label>
+          <label><input type="radio" name="q38" value="Law" /> Legal analysis</label>
+        </div>
+        <div class="question">
+          <p>What drives your curiosity?</p>
+          <label><input type="radio" name="q39" value="Technology" /> AI and data-driven insights</label>
+          <label><input type="radio" name="q39" value="Law" /> Legal systems and policies</label>
+          <label><input type="radio" name="q39" value="Environment" /> Environmental sustainability</label>
+          <label><input type="radio" name="q39" value="Arts" /> Exploring artistic expressions</label>
+        </div>
+        <div class="question">
+          <p>How do you prefer to work?</p>
+          <label><input type="radio" name="q40" value="Business" /> Leading and managing people</label>
+          <label><input type="radio" name="q40" value="Technology" /> Independently solving problems</label>
+          <label><input type="radio" name="q40" value="Arts" /> Collaborating creatively</label>
+          <label><input type="radio" name="q40" value="Law" /> Analyzing laws and policies</label>
+        </div>
+        <div class="question">
+          <p>What do you value most?</p>
+          <label><input type="radio" name="q41" value="Environment" /> Sustainable development</label>
+          <label><input type="radio" name="q41" value="Technology" /> Technological advancement</label>
+          <label><input type="radio" name="q41" value="Business" /> Organizational growth</label>
+          <label><input type="radio" name="q41" value="Law" /> Justice and fairness</label>
+        </div>
+        <!-- Add 25 more questions for Part 2 -->
+      </div>
+
+      <!-- Submit Button for Part 1 -->
+      <button id="submit-part1" class="submit-button">Submit Part 1</button>
+
+      <!-- Submit Button for Part 2 (Hidden Initially) -->
+      <button id="submit-part2" class="submit-button hidden">Submit Part 2</button>
+
+      <!-- Result Section (Hidden Initially) -->
+      <div id="result-section" class="hidden">
+        <h2>Your Aptitude Result</h2>
+        <div class="result" id="result"></div>
+      </div>
     </div>
 
     <script>
-        const questions = [
-            {
-                question: "Which word is most opposite in meaning to 'Ephemeral'?",
-                options: ["Transient", "Permanent", "Momentary", "Fleeting"],
-                category: "Verbal Reasoning",
-                answer: "Permanent"
-            },
-            {
-                question: "If the sum of three consecutive even numbers is 180, what is the smallest number?",
-                options: ["56", "58", "60", "62"],
-                category: "Numerical Reasoning",
-                answer: "58"
-            },
-            {
-                question: "What is the synonym for 'Gregarious'?",
-                options: ["Solitary", "Sociable", "Shy", "Timid"],
-                category: "Verbal Reasoning",
-                answer: "Sociable"
-            },
-            {
-                question: "What is the next number in the series: 2, 5, 10, 17, ?",
-                options: ["24", "26", "28", "30"],
-                category: "Numerical Reasoning",
-                answer: "26"
-            },
-            {
-                question: "A man spends 30% of his income on rent, 20% on food, and 10% on entertainment. If he saves the remaining $1,400, what is his total income?",
-                options: ["$4,000", "$5,000", "$6,000", "$7,000"],
-                category: "Numerical Reasoning",
-                answer: "$5,000"
-            },
-            {
-                question: "Which figure comes next in the sequence: △, ◯, □, △, ◯, ___?",
-                options: ["△", "◯", "□", "◾"],
-                category: "Abstract Reasoning",
-                answer: "□"
-            }
-        ];
+      // Variables to store scores for each course
+      const scores = {
+        Business: 0,
+        Technology: 0,
+        Healthcare: 0,
+        Arts: 0,
+        Law: 0,
+        Entrepreneurship: 0,
+        Environment: 0,
+      };
 
-        async function checkTestSubmission(userId) {
-            try {
-                const response = await fetch(`http://localhost:4000/user/test-submission/${userId}`);
-                if (!response.ok) throw new Error('Network response was not ok');
-                const data = await response.json();
-                return data.hasSubmitted; // Expecting a boolean response
-            } catch (error) {
-                console.error('Error checking test submission:', error);
-                return false; // Default to false if error occurs
-            }
-        }
-
-        async function storeTestResult(userId, bestStream) {
-            try {
-                const response = await fetch('http://localhost:4000/user/save-result', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        userId: userId,
-                        testResult: bestStream
-                    })
-                });
-
-                const data = await response.json();
-                if (response.ok) {
-                    alert('Test result stored successfully.');
-                } else {
-                    alert('Failed to store test result: ' + data.message);
-                }
-            } catch (error) {
-                console.log('Error:', error);
-                alert('An error occurred while storing the test result.');
-            }
-        }
-
-        function displayQuestions() {
-            const questionContainer = document.getElementById('question-container');
-            questions.forEach((q, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.innerHTML = `<h4>Q${index + 1}: ${q.question}</h4>`;
-                q.options.forEach(option => {
-                    questionDiv.innerHTML += `
-                        <label>
-                            <input type="radio" name="question${index}" value="${option}" required>
-                            ${option}
-                        </label><br>
-                    `;
-                });
-                questionContainer.appendChild(questionDiv);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            const userId = localStorage.getItem('userId');
-            if (userId) {
-                const hasSubmitted = await checkTestSubmission(userId);
-                if (hasSubmitted) {
-                    document.getElementById('test-content').style.display = 'none';
-                    document.getElementById('access-denied').style.display = 'block';
-                } else {
-                    displayQuestions();
-                }
-            } else {
-                alert('User ID not found in local storage. Please log in.');
-                window.location.href = 'login.html';
-            }
-
-            document.getElementById('aptitude-form').addEventListener('submit', async function (event) {
-                event.preventDefault();
-
-                const formData = new FormData(this);
-                const userAnswers = [];
-
-                questions.forEach((q, index) => {
-                    userAnswers.push(formData.get(`question${index}`));
-                });
-
-                const results = {
-                    Science: 0,
-                    Commerce: 0,
-                    Arts: 0
-                };
-
-                questions.forEach((q, index) => {
-                    if (userAnswers[index] === q.answer) {
-                        if (["Numerical Reasoning", "Science", "Mechanical Reasoning"].includes(q.category)) {
-                            results.Science++;
-                        } else if (["Logical Reasoning", "Verbal Reasoning"].includes(q.category)) {
-                            results.Commerce++;
-                        } else if (["Arts", "Abstract Reasoning"].includes(q.category)) {
-                            results.Arts++;
-                        }
-                    }
-                });
-
-                let bestStream = "Arts";
-                let maxScore = results.Arts;
-
-                for (const [stream, score] of Object.entries(results)) {
-                    if (score > maxScore) {
-                        bestStream = stream;
-                        maxScore = score;
-                    }
-                }
-
-                const resultDiv = document.getElementById('result');
-                resultDiv.innerHTML = `Based on your answers, you are best suited for the <strong>${bestStream}</strong> stream. For more accurate results, please visit a counselor of your preference.`;
-                resultDiv.style.display = 'block';
-
-                await storeTestResult(userId, bestStream);
-            });
+      // Function to calculate scores
+      function calculateScores() {
+        const questions = document.querySelectorAll(".question");
+        questions.forEach((question) => {
+          const selectedOption = question.querySelector("input[type='radio']:checked");
+          if (selectedOption) {
+            scores[selectedOption.value]++;
+          }
         });
-    </script>
-</body>
+      }
 
+      // Function to display result
+      function displayResult() {
+        const resultDiv = document.getElementById("result");
+        let resultText = "Your aptitude lies in:<br>";
+        for (const [course, score] of Object.entries(scores)) {
+          resultText += `${course}: ${score}<br>`;
+        }
+        resultDiv.innerHTML = resultText;
+      }
+
+      // Event Listeners
+      document.getElementById("submit-part1").addEventListener("click", () => {
+        calculateScores();
+        document.getElementById("part1").classList.add("hidden");
+        document.getElementById("part2").classList.remove("hidden");
+        document.getElementById("submit-part1").classList.add("hidden");
+        document.getElementById("submit-part2").classList.remove("hidden");
+      });
+
+      document.getElementById("submit-part2").addEventListener("click", () => {
+        calculateScores();
+        document.getElementById("part2").classList.add("hidden");
+        document.getElementById("result-section").classList.remove("hidden");
+        displayResult();
+      });
+    </script>
+  </body>
 </html>

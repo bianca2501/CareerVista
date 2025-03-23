@@ -230,8 +230,7 @@
           max-width: 100%;
         }
       }
-
-      /* Change Counselor Modal */
+    /* Modal Styles (Reusable) */
 .modal {
   display: none; /* Hidden by default */
   position: fixed;
@@ -260,7 +259,8 @@
 }
 
 .modal select,
-.modal textarea {
+.modal textarea,
+.modal input[type="date"] {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
@@ -291,7 +291,7 @@
   transform: translateY(-3px);
 }
 
-/* Overlay for Modal */
+/* Overlay for Modal (Reusable) */
 .overlay {
   display: none; /* Hidden by default */
   position: fixed;
@@ -302,6 +302,13 @@
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
   z-index: 1000;
 }
+
+/* Confirmation Message */
+#confirmation {
+  margin-top: 15px;
+  font-size: 0.9em;
+  color: #264a6c;
+} 
     </style>
   </head>
   <body>
@@ -346,7 +353,7 @@
         <a href="test.html" class="btn">Take Test</a>
       </div>
 
-      <!-- Counseling Sessions Section -->
+            <!-- Counseling Sessions Section -->
       <div id="sessions" class="card">
         <h3>Counseling Sessions</h3>
         <div class="counselor-item">
@@ -371,10 +378,13 @@
           <button class="btn" onclick="openChangeCounselorModal()">
             Change Counselor
           </button>
+          <!-- Add Book a Session Button -->
+          <button class="btn" onclick="openBookSessionModal()">
+            Book a Session
+          </button>
         </div>
       </div>
-
-      
+            
 
       <!-- Courses Section -->
       <div id="courses" class="card">
@@ -491,36 +501,67 @@
       </div>
     </div>
     <!-- Change Counselor Modal -->
-<div id="change-counselor-modal" class="modal">
-  <h4>Change Counselor</h4>
-  <form>
-    <label for="reason">Why do you want to change your counselor?</label>
-    <select id="reason" name="reason" required>
-      <option value="">Select a reason</option>
-      <option value="not-available">Counselor is not available</option>
-      <option value="not-helpful">Counselor is not helpful</option>
-      <option value="personal-reasons">Personal reasons</option>
-      <option value="other">Other</option>
-    </select>
+    <div id="change-counselor-modal" class="modal">
+      <h4>Change Counselor</h4>
+      <form>
+        <label for="reason">Why do you want to change your counselor?</label>
+        <select id="reason" name="reason" required>
+          <option value="">Select a reason</option>
+          <option value="not-available">Counselor is not available</option>
+          <option value="not-helpful">Counselor is not helpful</option>
+          <option value="personal-reasons">Personal reasons</option>
+          <option value="other">Other</option>
+        </select>
 
-    <label for="additional-info">Additional Information:</label>
-    <textarea
-      id="additional-info"
-      name="additional-info"
-      rows="5"
-      placeholder="Provide additional details (optional)"
-    ></textarea>
+        <label for="additional-info">Additional Information:</label>
+        <textarea
+          id="additional-info"
+          name="additional-info"
+          rows="5"
+          placeholder="Provide additional details (optional)"
+        ></textarea>
 
-    <button type="submit" class="btn">Submit Request</button>
-    <button type="button" class="btn" onclick="closeChangeCounselorModal()">
-      Cancel
-    </button>
-  </form>
-</div>
+        <button type="submit" class="btn">Submit Request</button>
+        <button type="button" class="btn" onclick="closeChangeCounselorModal()">
+          Cancel
+        </button>
+      </form>
+    </div>
 
-<!-- Overlay for Modal -->
-<div id="overlay" class="overlay"></div>
-
+    <!-- Overlay for Modal -->
+    <div id="overlay" class="overlay"></div>
+    <!-- Book a Session Modal -->
+    <div id="book-session-modal" class="modal">
+      <h4>Book a Counseling Session</h4>
+      <form>
+        <div class="form-group">
+          <label for="counselor">Choose a Counselor:</label>
+          <select id="counselor">
+            <option value="Deepa Panakal">Deepa Panakal</option>
+            <option value="David Woods">David Woods</option>
+            <option value="Ronnie Dawns">Ronnie Dawns</option>
+            <option value="Emily Carpenter">Emily Carpenter</option>
+            <option value="Lisa Brown">Lisa Brown</option>
+            <option value="Sarah Thompson">Sarah Thompson</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="date">Select a Date:</label>
+          <input type="date" id="date" />
+        </div>
+        <div class="form-group">
+          <label for="time">Available Time Slots:</label>
+          <select id="time">
+            <!-- Time slots will be populated by JavaScript -->
+          </select>
+        </div>
+        <button type="button" class="btn" onclick="bookSession()">Book Now</button>
+        <button type="button" class="btn" onclick="closeBookSessionModal()">
+          Cancel
+        </button>
+      </form>
+      <div id="confirmation"></div>
+    </div>
     <script>
       function showContent(sectionId) {
         // Hide all sections
@@ -579,6 +620,54 @@
         // Hide the modal and overlay
         modal.style.display = "none";
         overlay.style.display = "none";
+      }
+      // Function to open the Book a Session modal
+      function openBookSessionModal() {
+        const modal = document.getElementById("book-session-modal");
+        const overlay = document.getElementById("overlay");
+
+        // Populate time slots
+        const timeSlots = ["10:00 AM", "11:00 AM", "2:00 PM", "3:00 PM", "4:00 PM"];
+        const timeSelect = document.getElementById("time");
+        timeSelect.innerHTML = ""; // Clear existing options
+        timeSlots.forEach((slot) => {
+          const option = document.createElement("option");
+          option.value = slot;
+          option.textContent = slot;
+          timeSelect.appendChild(option);
+        });
+
+        // Show the modal and overlay
+        modal.style.display = "block";
+        overlay.style.display = "block";
+      }
+
+      // Function to close the Book a Session modal
+      function closeBookSessionModal() {
+        const modal = document.getElementById("book-session-modal");
+        const overlay = document.getElementById("overlay");
+
+        // Hide the modal and overlay
+        modal.style.display = "none";
+        overlay.style.display = "none";
+      }
+
+      // Function to book a session
+      function bookSession() {
+        const counselor = document.getElementById("counselor").value;
+        const date = document.getElementById("date").value;
+        const time = document.getElementById("time").value;
+        const confirmation = document.getElementById("confirmation");
+
+        if (counselor && date && time) {
+          confirmation.textContent = `Session booked with ${counselor} on ${date} at ${time}.`;
+          // Close the modal after 2 seconds
+          setTimeout(() => {
+            closeBookSessionModal();
+          }, 2000);
+        } else {
+          confirmation.textContent = "Please fill out all fields to book a session.";
+        }
       }
 
       // Sign Out Functionality
