@@ -5,186 +5,337 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Video Call | CareerVista</title>
     <style>
+      /* Color Variables */
+      :root {
+        --dark-blue: #272643;
+        --white: #ffffff;
+        --light-teal: #e3f6f5;
+        --medium-teal: #bae8e8;
+        --deep-blue: #2c698d;
+      }
+
       /* Global Styles */
       body {
         margin: 0;
         padding: 0;
-        font-family: Arial, sans-serif;
-        background-color: #ffffff; /* White background */
-        color: #000000; /* Black text */
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--light-teal);
+        color: var(--dark-blue);
         height: 100vh;
+        overflow: hidden;
       }
 
-      /* Video Call Container */
-      .video-call-container {
+      /* Main Layout */
+      .main-container {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 90%;
-        max-width: 1200px;
-        height: 90vh;
-        background-color: #f5f5f5; /* Light grey background */
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        padding: 20px;
+        height: 100vh;
       }
 
       /* Video Section */
       .video-section {
-        display: flex;
-        gap: 20px;
-        width: 100%;
-        height: 70%;
-        margin-bottom: 20px;
-      }
-
-      .video-wrapper {
         flex: 1;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background-color: #ffffff; /* White background */
-        border-radius: 8px;
-        padding: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        background-color: var(--white);
       }
 
-      video {
+      .video-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      .counselor-video {
+        width: 100%;
+        height: 80%;
+        max-height: 70vh;
+        background-color: var(--medium-teal);
+        border-radius: 12px;
+        object-fit: cover;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .user-video-container {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        width: 25%;
+        height: 25%;
+        min-width: 200px;
+        min-height: 150px;
+        background-color: var(--white);
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border: 2px solid var(--deep-blue);
+        overflow: hidden;
+      }
+
+      .user-video {
         width: 100%;
         height: 100%;
-        max-height: 400px;
-        background-color: #e0e0e0; /* Light grey background */
-        border-radius: 8px;
         object-fit: cover;
       }
 
-      .video-wrapper p {
-        margin-top: 10px;
-        font-size: 1.2rem;
-        font-weight: 500;
-        color: #000000; /* Black text */
+      .video-label {
+        position: absolute;
+        bottom: 5px;
+        left: 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
       }
 
       /* Controls */
       .controls {
         display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
+        justify-content: center;
+        gap: 15px;
+        padding: 15px 0;
       }
 
       .controls button {
-        padding: 10px 20px;
-        background-color: #000; 
-        color: #e0e0e0; 
+        padding: 12px 24px;
+        background-color: var(--dark-blue);
+        color: var(--white);
         border: none;
-        border-radius: 4px;
+        border-radius: 30px;
         cursor: pointer;
         font-size: 1rem;
-        transition: background-color 0.3s ease;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
 
       .controls button:hover {
-        background-color: #bdbdbd; /* Medium grey on hover */
+        background-color: var(--deep-blue);
+        transform: translateY(-2px);
+      }
+
+      .controls button i {
+        font-size: 1.2rem;
       }
 
       /* Chat Section */
       .chat-section {
-        width: 100%;
-        max-width: 300px; /* Smaller width for the chat section */
-        background-color: #ffffff; /* White background */
-        border-radius: 8px;
-        padding: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        width: 350px;
+        background-color: var(--white);
+        border-left: 1px solid var(--medium-teal);
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        transition: transform 0.3s ease;
+      }
+
+      .chat-header {
+        padding: 15px;
+        border-bottom: 1px solid var(--medium-teal);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
 
       .chat-header h2 {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-        color: #000000; /* Black text */
+        font-size: 1.3rem;
+        margin: 0;
+        color: var(--dark-blue);
+      }
+
+      .toggle-chat {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--dark-blue);
       }
 
       .chat-messages {
-        height: 50px; /* Smaller height for chat messages */
+        flex: 1;
         overflow-y: auto;
-        border: 1px solid #e0e0e0; /* Light grey border */
-        border-radius: 4px;
-        padding: 10px;
-        margin-bottom: 10px;
-        background-color: #f5f5f5; /* Light grey background */
-        color: #000000; /* Black text */
+        padding: 15px;
+        background-color: var(--light-teal);
+      }
+
+      .message {
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        border-radius: 8px;
+        max-width: 80%;
+        word-wrap: break-word;
+      }
+
+      .message.counselor {
+        background-color: var(--white);
+        border: 1px solid var(--medium-teal);
+        margin-right: auto;
+      }
+
+      .message.student {
+        background-color: var(--deep-blue);
+        color: var(--white);
+        margin-left: auto;
+      }
+
+      .message strong {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
       }
 
       .chat-input {
         display: flex;
-        gap: 10px;
+        padding: 15px;
+        border-top: 1px solid var(--medium-teal);
       }
 
       .chat-input input {
         flex: 1;
-        padding: 5px; /* Smaller padding */
-        border: 1px solid #e0e0e0; /* Light grey border */
-        border-radius: 4px;
-        font-size: 0.9rem; /* Smaller font size */
-        background-color: #ffffff; /* White background */
-        color: #000000; /* Black text */
-        width: 15cm; /* Set width to 20cm */
-        height: 1cm; /* Set height to 3cm */
-        box-sizing: border-box; /* Ensure padding and border are included in the dimensions */
+        padding: 12px;
+        border: 1px solid var(--medium-teal);
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: var(--white);
+        color: var(--dark-blue);
       }
+
       .chat-input button {
-        padding: 8px 15px; /* Smaller padding */
-        background-color: #000000; /* Light grey background */
-        color: #e0e0e0; /* Black text */
+        padding: 12px 20px;
+        background-color: var(--dark-blue);
+        color: var(--white);
         border: none;
-        border-radius: 4px;
+        border-radius: 8px;
         cursor: pointer;
-        font-size: 0.9rem; /* Smaller font size */
-        transition: background-color 0.3s ease;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        margin-left: 10px;
       }
 
       .chat-input button:hover {
-        background-color: #bdbdbd; /* Medium grey on hover */
+        background-color: var(--deep-blue);
+      }
+
+      /* Pop-out Chat */
+      .chat-popout {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 350px;
+        height: 500px;
+        background-color: var(--white);
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        border: 1px solid var(--medium-teal);
+        display: none;
+        flex-direction: column;
+        z-index: 1000;
+      }
+
+      .chat-popout.active {
+        display: flex;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .main-container {
+          flex-direction: column;
+        }
+        
+        .video-section {
+          height: 60vh;
+        }
+        
+        .chat-section {
+          width: 100%;
+          height: 40vh;
+        }
+        
+        .user-video-container {
+          width: 30%;
+          height: 20%;
+          min-width: 150px;
+          min-height: 100px;
+        }
       }
     </style>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <div class="video-call-container">
+    <div class="main-container">
       <!-- Video Section -->
       <div class="video-section">
-        <div class="video-wrapper">
-          <video muted id="local-video" autoplay></video>
-          <p>You (Student)</p>
+        <div class="video-container">
+          <video class="counselor-video" id="remote-video" autoplay></video>
+          
+          <div class="user-video-container">
+            <video class="user-video" id="local-video" muted autoplay></video>
+            <div class="video-label">You</div>
+          </div>
         </div>
-        <div class="video-wrapper">
-          <video id="remote-video" autoplay></video>
-          <p>Counselor</p>
+
+        <!-- Controls -->
+        <div class="controls">
+          <button onclick="muteAudio()" id="mute-button">
+            <i class='bx bx-microphone'></i> Mute
+          </button>
+          <button onclick="muteVideo()" id="camera-button">
+            <i class='bx bx-video'></i> Turn Off Camera
+          </button>
+          <button onclick="endCall()" id="end-call-button" style="background-color: #e74c3c;">
+            <i class='bx bx-phone-call'></i> End Call
+          </button>
+          <button onclick="toggleChat()" id="chat-button">
+            <i class='bx bx-chat'></i> Chat
+          </button>
         </div>
       </div>
 
-      <!-- Controls -->
-      <div class="controls">
-        <button onclick="muteAudio()" id="mute-button">Mute</button>
-        <button onclick="muteVideo()" id="camera-button">
-          Turn Off Camera
-        </button>
-      </div>
-
-      <!-- Chat Section -->
-      <div class="chat-section">
+      <!-- Chat Section (sidebar) -->
+      <div class="chat-section" id="sidebar-chat">
         <div class="chat-header">
-          <h2>Enter Room ID:</h2>
+          <h2>Session Chat</h2>
+          <button class="toggle-chat" onclick="toggleChat()">
+            <i class='bx bx-x'></i>
+          </button>
         </div>
         <div class="chat-messages" id="chat-messages">
-          <!-- Chat messages will appear here -->
+          <div class="message counselor">
+            <strong>Counselor (Ms. Deepa Panakal):</strong> Hello! How can I help you today?
+          </div>
         </div>
         <div class="chat-input">
-          <input type="text" id="username-input" placeholder="Enter Room ID: " />
-          <button id="send-button" onclick="joinCall()">Join</button>
+          <input type="text" id="message-input" placeholder="Type your message..." />
+          <button id="send-button" onclick="sendMessage()">
+            <i class='bx bx-send'></i>
+          </button>
         </div>
+      </div>
+    </div>
+
+    <!-- Pop-out Chat -->
+    <div class="chat-popout" id="popout-chat">
+      <div class="chat-header">
+        <h2>Session Chat</h2>
+        <button class="toggle-chat" onclick="toggleChat()">
+          <i class='bx bx-x'></i>
+        </button>
+      </div>
+      <div class="chat-messages" id="popout-messages">
+        <div class="message counselor">
+          <strong>Counselor (Ms. Deepa Panakal):</strong> Hello! How can I help you today?
+        </div>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="popout-message-input" placeholder="Type your message..." />
+        <button onclick="sendPopoutMessage()">
+          <i class='bx bx-send'></i>
+        </button>
       </div>
     </div>
 
@@ -192,110 +343,171 @@
       // Variables for video and audio streams
       let localStream;
       let remoteStream;
-      let peerConnection;
-
-      // Configuration for WebRTC
-      const configuration = {
-        iceServers: [
-          {
-            urls: "stun:stun.l.google.com:19302", // Free STUN server
-          },
-        ],
-      };
+      let isMuted = false;
+      let isVideoOff = false;
+      let isChatPoppedOut = false;
 
       // DOM Elements
       const localVideo = document.getElementById("local-video");
       const remoteVideo = document.getElementById("remote-video");
       const chatMessages = document.getElementById("chat-messages");
-      const usernameInput = document.getElementById("username-input");
-      const sendButton = document.getElementById("send-button");
+      const popoutMessages = document.getElementById("popout-messages");
+      const messageInput = document.getElementById("message-input");
+      const popoutMessageInput = document.getElementById("popout-message-input");
+      const muteButton = document.getElementById("mute-button");
+      const cameraButton = document.getElementById("camera-button");
+      const sidebarChat = document.getElementById("sidebar-chat");
+      const popoutChat = document.getElementById("popout-chat");
+
+      // Initialize the call when page loads
+      window.onload = async function() {
+        try {
+          // Get local media stream (video and audio)
+          localStream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true
+          });
+          localVideo.srcObject = localStream;
+
+          // Simulate remote stream connection (counselor's video)
+          setTimeout(() => {
+            // In a real app, this would be the actual counselor stream
+            // For demo, we'll use a placeholder image
+            remoteVideo.src = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80";
+            remoteVideo.play();
+          }, 1500);
+        } catch (error) {
+          console.error("Error accessing media devices:", error);
+          alert("Could not access your camera or microphone. Please check permissions.");
+        }
+      };
+
+      // Toggle chat between sidebar and popout
+      function toggleChat() {
+        isChatPoppedOut = !isChatPoppedOut;
+        
+        if (isChatPoppedOut) {
+          sidebarChat.style.display = "none";
+          popoutChat.classList.add("active");
+          
+          // Copy messages to popout
+          popoutMessages.innerHTML = chatMessages.innerHTML;
+        } else {
+          sidebarChat.style.display = "flex";
+          popoutChat.classList.remove("active");
+          
+          // Copy messages back to sidebar
+          chatMessages.innerHTML = popoutMessages.innerHTML;
+        }
+      }
 
       // Mute Audio
       function muteAudio() {
         const audioTracks = localStream.getAudioTracks();
-        const muteButton = document.getElementById("mute-button");
-
-        // Toggle audio track state
-        audioTracks.forEach((track) => {
+        audioTracks.forEach(track => {
           track.enabled = !track.enabled;
         });
-
-        // Update button text based on audio state
-        if (audioTracks[0].enabled) {
-          muteButton.textContent = "Mute";
-        } else {
-          muteButton.textContent = "Unmute";
-        }
+        
+        isMuted = !isMuted;
+        muteButton.innerHTML = isMuted 
+          ? "<i class='bx bx-microphone-off'></i> Unmute" 
+          : "<i class='bx bx-microphone'></i> Mute";
       }
 
       // Mute Video
       function muteVideo() {
         const videoTracks = localStream.getVideoTracks();
-        const cameraButton = document.getElementById("camera-button");
-
-        // Toggle video track state
-        videoTracks.forEach((track) => {
+        videoTracks.forEach(track => {
           track.enabled = !track.enabled;
         });
+        
+        isVideoOff = !isVideoOff;
+        cameraButton.innerHTML = isVideoOff
+          ? "<i class='bx bx-video-off'></i> Turn On Camera"
+          : "<i class='bx bx-video'></i> Turn Off Camera";
+      }
 
-        // Update button text based on video state
-        if (videoTracks[0].enabled) {
-          cameraButton.textContent = "Turn Off Camera";
-        } else {
-          cameraButton.textContent = "Turn On Camera";
+      // End Call
+      function endCall() {
+        if (confirm("Are you sure you want to end the call?")) {
+          // Stop all tracks
+          if (localStream) {
+            localStream.getTracks().forEach(track => track.stop());
+          }
+          
+          // Redirect or show call ended message
+          alert("Call ended. You will be redirected back to your dashboard.");
+          window.location.href = "dashboard.html";
         }
       }
 
-      // Join Call
-      function joinCall() {
-        const roomId = usernameInput.value;
-        if (!roomId) {
-          alert("Please enter a Room ID.");
-          return;
-        }
-
-        // Initialize WebRTC connection
-        initWebRTC(roomId);
-      }
-
-      // Initialize WebRTC
-      async function initWebRTC(roomId) {
-        try {
-          // Get local media stream (video and audio)
-          localStream = await navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: true,
-          });
-          localVideo.srcObject = localStream;
-
-          // Create a peer connection
-          peerConnection = new RTCPeerConnection(configuration);
-
-          // Add local stream tracks to the peer connection
-          localStream.getTracks().forEach((track) => {
-            peerConnection.addTrack(track, localStream);
-          });
-
-          // Handle remote stream
-          peerConnection.ontrack = (event) => {
-            remoteStream = event.streams[0];
-            remoteVideo.srcObject = remoteStream;
-          };
-
-          // Handle ICE candidates
-          peerConnection.onicecandidate = (event) => {
-            if (event.candidate) {
-              // Send the ICE candidate to the other peer (counselor)
-              // You can use a signaling server or WebSocket for this
-            }
-          };
-
-          // Join the room (simulate signaling)
-          console.log(`Joined room: ${roomId}`);
-        } catch (error) {
-          console.error("Error initializing WebRTC:", error);
+      // Send Message (from sidebar)
+      function sendMessage() {
+        const message = messageInput.value.trim();
+        if (message) {
+          addMessage(message, "student");
+          messageInput.value = "";
+          simulateCounselorReply();
         }
       }
+
+      // Send Message (from popout)
+      function sendPopoutMessage() {
+        const message = popoutMessageInput.value.trim();
+        if (message) {
+          addMessage(message, "student");
+          popoutMessageInput.value = "";
+          simulateCounselorReply();
+        }
+      }
+
+      // Add message to both chat views
+      function addMessage(message, sender) {
+        const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        const messageElement = `
+          <div class="message ${sender}">
+            <strong>${sender === 'student' ? 'You' : 'Counselor (Ms. Deepa Panakal)'}:</strong> 
+            ${message}
+            <div style="font-size:0.7rem; margin-top:5px;">${timestamp}</div>
+          </div>
+        `;
+        
+        chatMessages.insertAdjacentHTML('beforeend', messageElement);
+        popoutMessages.insertAdjacentHTML('beforeend', messageElement);
+        
+        // Scroll to bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        popoutMessages.scrollTop = popoutMessages.scrollHeight;
+      }
+
+      // Simulate counselor reply
+      function simulateCounselorReply() {
+        setTimeout(() => {
+          const replies = [
+            "I understand. Can you tell me more about that?",
+            "That's an interesting point. Have you considered...",
+            "Let me think about how we can approach this.",
+            "I'd recommend looking into...",
+            "That's a common concern. Here's what I suggest...",
+            "Based on your interests, I think you should consider..."
+          ];
+          const reply = replies[Math.floor(Math.random() * replies.length)];
+          addMessage(reply, "counselor");
+        }, 1000 + Math.random() * 2000);
+      }
+
+      // Allow pressing Enter to send message
+      messageInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+          sendMessage();
+        }
+      });
+      
+      popoutMessageInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+          sendPopoutMessage();
+        }
+      });
     </script>
   </body>
 </html>

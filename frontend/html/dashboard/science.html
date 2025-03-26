@@ -10,6 +10,14 @@
     />
     <style>
       /* Global Styles */
+      :root {
+        --dark-blue: #272643;
+        --white: #ffffff;
+        --light-teal: #e3f6f5;
+        --medium-teal: #bae8e8;
+        --deep-blue: #2c698d;
+      }
+      
       * {
         margin: 0;
         padding: 0;
@@ -18,8 +26,8 @@
       }
 
       body {
-        background-color: #f9f9f9;
-        color: #333;
+        background-color: var(--light-teal);
+        color: var(--dark-blue);
         line-height: 1.6;
       }
 
@@ -32,15 +40,16 @@
       h1 {
         font-size: 2.5rem;
         font-weight: 700;
-        color: #333;
+        color: var(--dark-blue);
         text-align: center;
         margin-bottom: 20px;
+        padding-top: 20px;
       }
 
       h2 {
         font-size: 2rem;
         font-weight: 600;
-        color: #333;
+        color: var(--deep-blue);
         margin-top: 30px;
         margin-bottom: 15px;
       }
@@ -48,14 +57,14 @@
       h3 {
         font-size: 1.5rem;
         font-weight: 600;
-        color: #333;
+        color: var(--dark-blue);
         margin-top: 20px;
         margin-bottom: 10px;
       }
 
       p {
         font-size: 1rem;
-        color: #555;
+        color: var(--dark-blue);
         margin-bottom: 15px;
       }
 
@@ -66,7 +75,7 @@
 
       ul li {
         font-size: 1rem;
-        color: #555;
+        color: var(--dark-blue);
         margin-bottom: 10px;
       }
 
@@ -76,14 +85,16 @@
         height: auto;
         border-radius: 10px;
         margin: 20px 0;
+        border: 2px solid var(--medium-teal);
       }
 
       .section {
-        background-color: #ffffff;
-        padding: 20px;
+        background-color: var(--white);
+        padding: 25px;
         border-radius: 10px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         margin-bottom: 30px;
+        border: 1px solid var(--medium-teal);
       }
 
       .section img {
@@ -96,8 +107,8 @@
         display: inline-block;
         margin-bottom: 20px;
         padding: 10px 20px;
-        background-color: #333;
-        color: white;
+        background-color: var(--dark-blue);
+        color: var(--white);
         text-decoration: none;
         border-radius: 30px;
         font-size: 1rem;
@@ -106,8 +117,13 @@
       }
 
       .back-btn:hover {
-        background-color: #555;
+        background-color: var(--deep-blue);
         transform: translateY(-3px);
+      }
+      
+      /* Emoji styling */
+      li strong {
+        color: var(--deep-blue);
       }
     </style>
   </head>
@@ -201,7 +217,6 @@
       <!-- IT & Computer Applications -->
       <div class="section">
         <h2>📡 IT & Computer Applications</h2>
-        
         <ul>
           <li><strong>BCA (Bachelor of Computer Applications)</strong> 💻 – Develop software and applications.</li>
           <li><strong>B.Sc. in Information Technology</strong> 🌐 – Manage IT solutions.</li>
@@ -213,13 +228,10 @@
       <!-- Law & Legal Studies -->
       <div class="section">
         <h2>⚖️ Law & Legal Studies</h2>
-        
         <ul>
           <li><strong>BA LLB (Integrated Law Course)</strong> ⚖️ – Advocate for justice and law.</li>
         </ul>
       </div>
-
-      
     </div>
   </body>
 </html>
